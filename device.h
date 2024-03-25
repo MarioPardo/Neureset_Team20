@@ -4,11 +4,10 @@
 #include "defs.h"
 
 #include <string>
-#include <vector>
+#include <QVector>
 #include <QDateTime>
+#include "sensor.h"
 
-
-class Sensor;
 
 class Device
 {
@@ -30,9 +29,9 @@ private:
     void pause();
     void stop();
     void reset();
-
+    QVector<Sensor*> sensors;
     void StartSession();
-    float calcDomFreq(std::vector<int>);
+    float calcDomFreq();
 };
 
 #endif // DEVICE_H

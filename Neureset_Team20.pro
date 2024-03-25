@@ -13,16 +13,20 @@ SOURCES += \
     main.cpp \
     mainmenu.cpp \
     pcwindow.cpp \
-    sessionlogwindow.cpp \
-    device.cpp
+    sensor.cpp \
+    device.cpp \
+    sessionlogwindow.cpp
+
 
 HEADERS += \
     activesessionwindow.h \
     mainmenu.h \
     pcwindow.h \
-    sessionlogwindow.h \
+    sensor.h \
     device.h \
-    defs.h \
+    sessionlogwindow.h \
+    defs.h
+
 
 FORMS += \
     activesessionwindow.ui \

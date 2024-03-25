@@ -6,6 +6,12 @@ Device::Device()
 {
     std::cout << "Device Constructor" << std::endl;
 
+
+    for(int i= 0; i < 21; i++) {
+        Sensor* newSensor = new Sensor();
+        sensors.append(newSensor);
+    }
+
 }
 
 
@@ -15,15 +21,17 @@ void Device::StartSession()
 }
 
 //takes in a bunch of frequencies from sensor to make calculation
-float Device::calcDomFreq(std::vector<int>)
+float Device::calcDomFreq()
 {
-    float domFreq = 0.0;
-
-    return domFreq;
+    float totalDomFreq = 0.0;
+    for(Sensor* s: sensors) {
+        totalDomFreq += s->CalculateDominantFrequency();
+    }
+    return totalDomFreq / sensors.size();
 }
 
 
-void Device::SensorDisconnected(int sensor)\
+void Device::SensorDisconnected(int sensor)
 {
     Display(" SENSOR " + std::to_string(sensor) + " DISCONNECTED \n ");
 

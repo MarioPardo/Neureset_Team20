@@ -1,5 +1,4 @@
 
-
 enum DEVICE_STATE {
     READY = 0,
     IN_SESSION = 1,
