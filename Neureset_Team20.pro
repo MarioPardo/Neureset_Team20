@@ -17,6 +17,7 @@ SOURCES += \
     device.cpp \
     sessionlogwindow.cpp
 
+
 HEADERS += \
     activesessionwindow.h \
     mainmenu.h \
@@ -25,6 +26,7 @@ HEADERS += \
     device.h \
     sessionlogwindow.h \
     defs.h
+
 
 FORMS += \
     activesessionwindow.ui \

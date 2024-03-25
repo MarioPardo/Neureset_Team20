@@ -8,6 +8,7 @@
 #include <QDateTime>
 #include "sensor.h"
 
+
 class Device
 {
 public:

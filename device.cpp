@@ -6,10 +6,12 @@ Device::Device()
 {
     std::cout << "Device Constructor" << std::endl;
 
+
     for(int i= 0; i < 21; i++) {
         Sensor* newSensor = new Sensor();
         sensors.append(newSensor);
     }
+
 }
 
 
