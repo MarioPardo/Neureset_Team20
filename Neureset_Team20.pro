@@ -25,8 +25,8 @@ HEADERS += \
     sensor.h \
     sensormanager.h \
     device.h \
-    defs.h \
-    sessionlogwindow.h
+    sessionlogwindow.h \
+    defs.h
 
 FORMS += \
     activesessionwindow.ui \
