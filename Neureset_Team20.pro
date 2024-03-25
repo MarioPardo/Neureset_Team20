@@ -15,6 +15,7 @@ SOURCES += \
     pcwindow.cpp \
     sensor.cpp \
     sensormanager.cpp \
+    device.cpp \
     sessionlogwindow.cpp
 
 HEADERS += \
@@ -23,6 +24,8 @@ HEADERS += \
     pcwindow.h \
     sensor.h \
     sensormanager.h \
+    device.h \
+    defs.h \
     sessionlogwindow.h
 
 FORMS += \
