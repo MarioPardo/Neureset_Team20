@@ -13,12 +13,16 @@ SOURCES += \
     main.cpp \
     mainmenu.cpp \
     pcwindow.cpp \
+    sensor.cpp \
+    sensormanager.cpp \
     sessionlogwindow.cpp
 
 HEADERS += \
     activesessionwindow.h \
     mainmenu.h \
     pcwindow.h \
+    sensor.h \
+    sensormanager.h \
     sessionlogwindow.h
 
 FORMS += \
