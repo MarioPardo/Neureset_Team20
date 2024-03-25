@@ -14,7 +14,6 @@ SOURCES += \
     mainmenu.cpp \
     pcwindow.cpp \
     sensor.cpp \
-    sensormanager.cpp \
     device.cpp \
     sessionlogwindow.cpp
 
@@ -23,7 +22,6 @@ HEADERS += \
     mainmenu.h \
     pcwindow.h \
     sensor.h \
-    sensormanager.h \
     device.h \
     sessionlogwindow.h \
     defs.h

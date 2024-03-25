@@ -4,7 +4,7 @@
 #include "defs.h"
 
 #include <string>
-#include <vector>
+#include <QVector>
 #include <QDateTime>
 #include "sensor.h"
 
