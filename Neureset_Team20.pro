@@ -1,4 +1,4 @@
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,13 +13,22 @@ SOURCES += \
     main.cpp \
     mainmenu.cpp \
     pcwindow.cpp \
+    sensor.cpp \
+    device.cpp \
+    session.cpp \
     sessionlogwindow.cpp
+
 
 HEADERS += \
     activesessionwindow.h \
     mainmenu.h \
     pcwindow.h \
-    sessionlogwindow.h
+    sensor.h \
+    device.h \
+    session.h \
+    sessionlogwindow.h \
+    defs.h
+
 
 FORMS += \
     activesessionwindow.ui \
