@@ -2,24 +2,90 @@
 #include <iostream>
 #include <QThread>
 
-Device::Device()
+Device::Device(QObject *parent) : QObject(parent)
 {
     std::cout << "Device Constructor" << std::endl;
 
-
     for(int i= 0; i < 21; i++) {
-        Sensor* newSensor = new Sensor();
+        Sensor* newSensor = new Sensor(i);
         sensors.append(newSensor);
+    }
+
+
+}
+
+Device::~Device()
+{
+    std::cout<< "Device DTOR" <<std::endl;
+}
+
+void Device::StartSession()
+{
+    runTimer = new QTimer(this);
+    connect(runTimer, &QTimer::timeout, this, &Device::run);
+    runTimer->start(1000);
+
+    state = FIRST_OVERALL;
+}
+
+void Device::run()
+{
+    std::cout << "run" <<std::endl;
+
+    //check paused behaviour
+    if(state == PAUSED)
+    {
+
+        return;
+    }
+
+    if(state == FIRST_OVERALL)
+    {
+        std::cout << "Calculating first Baseline" <<std::endl;
+        firstBaseline = CalculateBaseline();
+
+        //finished calculating baseline, now prep for next step
+        sensorQueue = sensors;
+        state = APPLYING_TREATMENT;
+        return;
+    }
+    else if(state == APPLYING_TREATMENT)
+    {
+        if(sensorQueue.isEmpty())
+        {
+            std::cout<<"Finished applying treatment" <<std::endl;
+            //set up for next step
+
+            return;
+        }
+
+        Sensor* sensor = sensorQueue.front();
+        sensorQueue.erase(sensorQueue.begin());
+
+        float domFreq = sensor->CalculateDominantFrequency();
+        sensor->ApplyTreatment(domFreq);
+
+        return;
+    }
+    else if(state == SECOND_OVERALL)
+    {
+        std::cout << "Calculating first Baseline" <<std::endl;
+        secondBaseline = CalculateBaseline();
+
+        //finished treatment, now store it and set device to ready for new session
+
+        state = READY;
+        return;
     }
 
 }
 
-
-void Device::StartSession()
+float Device::CalculateBaseline()
 {
-    //TODO make pseudo code for running session
+    return 5.0f;
 }
 
+/*
 //takes in a bunch of frequencies from sensor to make calculation
 float Device::calcDomFreq()
 {
@@ -29,6 +95,7 @@ float Device::calcDomFreq()
     }
     return totalDomFreq / sensors.size();
 }
+*/
 
 
 void Device::SensorDisconnected(int sensor)

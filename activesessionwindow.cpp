@@ -1,5 +1,6 @@
 #include "activesessionwindow.h"
 #include "ui_activesessionwindow.h"
+#include "device.h"
 
 #include <iostream>
 
@@ -19,6 +20,8 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent) :
     timeRemainingLabel = findChild<QLabel*>("remainingTime_lbl");
     sessionProgressBar = findChild<QProgressBar*>("batteryProgressBar");
 
+    device = new Device();
+
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()
@@ -35,6 +38,7 @@ void ActiveSessionWindow::on_stop_Btn_clicked()
 void ActiveSessionWindow::on_play_Btn_clicked()
 {
     std::cout<< "STARTING SESSION" <<std::endl;
+    device->StartSession();
 }
 
 

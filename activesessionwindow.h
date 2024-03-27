@@ -7,6 +7,8 @@
 #include <QProgressBar>
 #include <QLabel>
 
+class Device;
+
 namespace Ui {
 class ActiveSessionWindow;
 }
@@ -44,6 +46,8 @@ private slots:
 
 private:
     Ui::ActiveSessionWindow *ui;
+
+    Device* device;
 };
 
 #endif // ACTIVESESSIONWINDOW_H
