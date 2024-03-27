@@ -26,7 +26,6 @@ HEADERS += \
     sensor.h \
     device.h \
     session.h \
-
     sessionlogwindow.h \
     defs.h
 

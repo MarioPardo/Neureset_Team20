@@ -23,6 +23,9 @@ public:
     void SensorDisconnected(int sensor);
 
     void StartSession();
+    void pause();
+    void stop();
+    void reset();
 
 public slots:
     void run();
@@ -40,11 +43,6 @@ private:
 
     float firstBaseline = NULL;
     float secondBaseline = NULL;
-
-
-    void pause();
-    void stop();
-    void reset();
 
     float CalculateBaseline();
     float calcDomFreq();
