@@ -45,6 +45,7 @@ void ActiveSessionWindow::on_play_Btn_clicked()
 void ActiveSessionWindow::on_pause_Btn_clicked()
 {
     std::cout << "PAUSING SESSION" << std::endl;
+    device->pause();
 }
 
 
