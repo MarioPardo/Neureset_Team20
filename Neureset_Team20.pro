@@ -31,6 +31,7 @@ HEADERS += \
 
 
 FORMS += \
+    #../../sessionlogwindow.ui \
     activesessionwindow.ui \
     mainmenu.ui \
     pcwindow.ui \
