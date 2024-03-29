@@ -23,19 +23,16 @@ void MainMenu::on_newsession_Btn_clicked()
     //open new session UI
     cout <<endl << "New session opened." << endl ;
 
-    ActiveSessionWindow sessionWindow; // Create an instance of SecondWindow
-    sessionWindow.setModal(true);
-    sessionWindow.exec();
-    //sessionWindow.show();
-
+    ActiveSessionWindow* sessionWindow = new ActiveSessionWindow(this); // Create an instance of SecondWindow
+    sessionWindow->show();
 }
 
 
 void MainMenu::on_sessionlog_Btn_clicked()
 {
     cout << endl << "Session log opened." <<  endl;
-    SessionLogWindow SLW; // Create an instance of SecondWindow
-    //SLW.show(); // Show the SecondWindow
+    SessionLogWindow* SLW = new SessionLogWindow(this); // Create an instance of SecondWindow
+    SLW->show();
 
     //open session log UI
 }
