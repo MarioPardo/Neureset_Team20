@@ -31,20 +31,18 @@ ActiveSessionWindow::~ActiveSessionWindow()
 
 void ActiveSessionWindow::on_stop_Btn_clicked()
 {
-    std::cout<<" STOPPING SESSION" <<std::endl;
+    device->stop();
 }
 
 
 void ActiveSessionWindow::on_play_Btn_clicked()
 {
-    std::cout<< "STARTING SESSION" <<std::endl;
     device->StartSession();
 }
 
 
 void ActiveSessionWindow::on_pause_Btn_clicked()
 {
-    std::cout << "PAUSING SESSION" << std::endl;
     device->pause();
 }
 

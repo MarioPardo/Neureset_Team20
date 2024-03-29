@@ -5,7 +5,7 @@
 
 #include <string>
 #include <QVector>
-#include <QDateTime>
+#include <QTime>
 #include <QTimer>
 #include <QObject>
 #include "sensor.h"
@@ -37,7 +37,7 @@ private:
     int powerPercentage = 100;
     DEVICE_STATE state = READY;
     DEVICE_STATE prevState = state;
-    QDateTime pausedTime;
+    QTime pausedTime;
 
     QTimer* runTimer;
 

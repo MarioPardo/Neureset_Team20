@@ -45,7 +45,10 @@ void Device::run()
 
     if(state == PAUSED)
     {
-        //TODO implement pause timeout behaviour
+        if(pausedTime.msecsTo(QTime::currentTime()) >= 5000)
+        {
+            stop();
+        }
         return;
     }
 
@@ -118,7 +121,6 @@ float Device::calcDomFreq()
 }
 
 
-
 void Device::SensorDisconnected(int sensor)
 {
     Display(" SENSOR " + std::to_string(sensor) + " DISCONNECTED \n ");
@@ -129,37 +131,32 @@ void Device::SensorDisconnected(int sensor)
 
 void Device::Display(std::string str)
 {
+    std::cout << str << std::endl;
     //TODO hook up to UI display
 }
 
 
 void Device::pause()
 {
-    //TODO implement waiting for unpause behaviour
+    if(!runTimer)
+    {
+        Display(" NOTHING TO PAUSE!");
+        return;
+    }
+
 
     if(state == PAUSED)
     {
         Display("DEVICE UNPAUSED, RESUMING");
-        QThread::sleep(1);
         state = prevState;
-        if(runTimer)
-            runTimer->start();
     }
     else
     {
-        if(runTimer)
-        {
-            runTimer->start();
-            Display("DEVICE PAUSED");
-            prevState = state;
-            state = PAUSED;
-            return;
-        }
-
-        std::cout<<" NOTHING TO PAUSE!" <<std::endl;
-
-
-
+        Display("DEVICE PAUSED");
+        prevState = state;
+        state = PAUSED;
+        pausedTime = QTime::currentTime();
+        return;
     }
 
 }
