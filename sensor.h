@@ -2,6 +2,8 @@
 #define SENSOR_H
 
 #include <QObject>
+#include <QVector>
+
 
 class Sensor
 {

@@ -6,6 +6,8 @@
 #include <QPlainTextEdit>
 #include <QProgressBar>
 #include <QLabel>
+#include <QApplication>
+
 
 class Device;
 
