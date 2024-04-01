@@ -10,7 +10,7 @@ class Sensor
 
 public:
     Sensor(int i);
-    void ApplyTreatment(float freq);
+    float ApplyTreatment(float domFreq, int round);
     float CalculateDominantFrequency();
 
 private:
