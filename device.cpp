@@ -1,6 +1,7 @@
 #include "device.h"
 #include <iostream>
 #include <QThread>
+#include <QTimer>
 
 Device::Device(QObject *parent) : QObject(parent)
 {
@@ -31,7 +32,7 @@ void Device::StartSession()
 
     runTimer = new QTimer(this);
     connect(runTimer, &QTimer::timeout, this, &Device::run);
-    runTimer->start(1000);
+    runTimer->start(1500);
 
     state = FIRST_OVERALL;
 }
@@ -46,9 +47,7 @@ void Device::run()
     if(state == PAUSED)
     {
         if(pausedTime.msecsTo(QTime::currentTime()) >= 5000)
-        {
             stop();
-        }
         return;
     }
 
@@ -60,9 +59,7 @@ void Device::run()
         //finished calculating baseline, now prep for next step
         sensorQueue.clear();
         for(Sensor* s : sensors)
-        {
             sensorQueue.append(s)  ;
-        }
 
 
         state = APPLYING_TREATMENT;
@@ -70,6 +67,8 @@ void Device::run()
     }
     else if(state == APPLYING_TREATMENT)
     {
+
+         //TODO implement treatment rounds
 
         if(sensorQueue.isEmpty())
         {
@@ -83,7 +82,7 @@ void Device::run()
         sensorQueue.erase(sensorQueue.begin());
 
         float domFreq = sensor->CalculateDominantFrequency();
-        sensor->ApplyTreatment(domFreq);
+        sensor->ApplyTreatment(domFreq,1);
 
         return;
     }
@@ -106,7 +105,7 @@ void Device::run()
 
 float Device::CalculateBaseline()
 {
-    return 5.0f;
+    return 5.0f; //rand value for now
 }
 
 

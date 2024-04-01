@@ -10,3 +10,7 @@ enum DEVICE_STATE {
     APPLYING_TREATMENT = 5,
     SECOND_OVERALL = 6,
 };
+
+
+
+
