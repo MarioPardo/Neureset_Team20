@@ -2,7 +2,6 @@
 #define DEVICE_H
 
 #include "defs.h"
-
 #include <string>
 #include <QVector>
 #include <QTime>
