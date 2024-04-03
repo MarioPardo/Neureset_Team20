@@ -8,7 +8,7 @@ Device::Device(QObject *parent) : QObject(parent)
     std::cout << "Device Constructor" << std::endl;
 
     for(int i= 0; i < 21; i++) {
-        Sensor* newSensor = new Sensor(i);
+        Sensor* newSensor = new Sensor(i, ALPHA);
         sensors.append(newSensor);
     }
 
