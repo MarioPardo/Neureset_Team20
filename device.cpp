@@ -74,7 +74,7 @@ void Device::run()
         {
             std::cout<<"Finished round #: "<< treatmentRound << std::endl;
 
-            if(treatmentRound  == 4) //finished treatment, go to next step
+            if(treatmentRound  == numRounds) //finished treatment, go to next step
             {
                 treatmentRound = NULL;
                 sensorQueue.clear();
