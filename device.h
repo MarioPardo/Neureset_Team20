@@ -33,6 +33,7 @@ private:
 
     QVector<Sensor*> sensors;
     QVector<Sensor*> sensorQueue;
+    int treatmentRound = NULL;
     int powerPercentage = 100;
     DEVICE_STATE state = READY;
     DEVICE_STATE prevState = state;
@@ -46,7 +47,7 @@ private:
     float CalculateBaseline();
     float calcDomFreq();
 
-
+    void EndSession();
 
 };
 

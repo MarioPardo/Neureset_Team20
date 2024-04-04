@@ -7,7 +7,7 @@ Device::Device(QObject *parent) : QObject(parent)
 {
     std::cout << "Device Constructor" << std::endl;
 
-    for(int i= 0; i < 21; i++) {
+    for(int i= 0; i < 7; i++) {
         Sensor* newSensor = new Sensor(i, ALPHA);
         sensors.append(newSensor);
     }
@@ -63,17 +63,30 @@ void Device::run()
 
 
         state = APPLYING_TREATMENT;
+        treatmentRound = 1;
         return;
     }
     else if(state == APPLYING_TREATMENT)
     {
 
-         //TODO implement treatment rounds
 
         if(sensorQueue.isEmpty())
         {
-            std::cout<<"Finished applying treatment" <<std::endl;
-            //set up for next step
+            std::cout<<"Finished round #: "<< treatmentRound << std::endl;
+
+            if(treatmentRound  == numRounds) //finished treatment, go to next step
+            {
+                treatmentRound = NULL;
+                sensorQueue.clear();
+                state = SECOND_OVERALL;
+            }
+
+            //not last round, prep for next round
+            sensorQueue.clear();
+            for(Sensor* s : sensors)
+                sensorQueue.append(s);
+
+            treatmentRound ++;
 
             return;
         }
@@ -82,7 +95,7 @@ void Device::run()
         sensorQueue.erase(sensorQueue.begin());
 
         float domFreq = sensor->CalculateDominantFrequency();
-        sensor->ApplyTreatment(domFreq,1);
+        sensor->ApplyTreatment(domFreq,treatmentRound);
 
         return;
     }
@@ -91,10 +104,7 @@ void Device::run()
         std::cout << "Calculating Second Baseline Baseline" <<std::endl;
         secondBaseline = CalculateBaseline();
 
-        //finished treatment, now store it and set device to ready for new session
-
-        std::cout<<" SESSION FINISHED" <<std::endl;
-        runTimer->stop();
+        EndSession();
 
 
         state = READY;
@@ -106,6 +116,13 @@ void Device::run()
 float Device::CalculateBaseline()
 {
     return 5.0f; //rand value for now
+}
+
+void Device::EndSession()
+{
+
+    std::cout<<" SESSION FINISHED" <<std::endl;
+    runTimer->stop();
 }
 
 
