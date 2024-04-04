@@ -3,7 +3,7 @@
 #include <iostream>
 #include <QThread>
 
-Sensor::Sensor(int id, EEGFrequencyRange range): id(id), range(range) {
+Sensor::Sensor(int id, EEGFrequencyType range): id(id), range(range) {
 }
 
 //fill when we know wtf is going on
@@ -37,23 +37,23 @@ float Sensor::ApplyTreatment(float domFreq, int round)
 
 QVector<QPair<int, float>> Sensor::getVoltageGraphData() {
     qDebug() << "reachin";
-    EEGFrequencyRange range = this->range;
+    EEGFrequencyType range = this->range;
     double minFreq, maxFreq;
     switch (range) {
-        case EEGFrequencyRange::DELTA:
+    case EEGFrequencyType::DELTA:
             minFreq = 1.0;
             maxFreq = 3.0;
 
             break;
-        case EEGFrequencyRange::THETA:
+    case EEGFrequencyType::THETA:
             minFreq = 3.5;
             maxFreq = 7.5;
             break;
-        case EEGFrequencyRange::ALPHA:
+    case EEGFrequencyType::ALPHA:
             minFreq = 8.0;
             maxFreq = 14.0;
             break;
-        case EEGFrequencyRange::BETA:
+    case EEGFrequencyType::BETA:
             minFreq = 14.0;
             maxFreq = 30.0;
             break;

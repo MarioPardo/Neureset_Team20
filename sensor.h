@@ -13,14 +13,14 @@ class Sensor
 {
 
 public:
-    Sensor(int id, EEGFrequencyRange range);
+    Sensor(int id, EEGFrequencyType range);
     float ApplyTreatment(float domFreq,int round);
     float CalculateDominantFrequency();
     QVector<QPair<int, float>> getVoltageGraphData();
 private:
     int id;
     QVector<float> frequencies;
-    EEGFrequencyRange range;
+    EEGFrequencyType range;
 };
 
 
