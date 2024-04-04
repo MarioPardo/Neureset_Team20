@@ -13,7 +13,7 @@ float Sensor::CalculateDominantFrequency()
 }
 
 
-std::vector<double> getFrequencyRange(EEGFrequencyType freqType) {
+std::vector<double> Sensor::getFrequencyRange(EEGFrequencyType freqType) {
     double minFreq, maxFreq;
 
     switch (freqType) {
@@ -37,6 +37,11 @@ std::vector<double> getFrequencyRange(EEGFrequencyType freqType) {
 
     std::vector<double> rangeVec = {minFreq, maxFreq};
     return rangeVec;
+}
+
+double Sensor::getRandomOffset(EEGFrequencyType freqType, double val)
+{
+
 }
 
 float Sensor::ApplyTreatment(float domFreq, int round)
@@ -65,6 +70,9 @@ QVector<QPair<int, float>> Sensor::getVoltageGraphData() {
     qDebug() << "reachin";
     EEGFrequencyType range = this->frequencyType;
     double minFreq, maxFreq;
+
+    //TODO change to use getFrequencyRange()
+
     switch (range) {
     case EEGFrequencyType::DELTA:
             minFreq = 1.0;
