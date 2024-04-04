@@ -38,6 +38,7 @@ private:
     DEVICE_STATE state = READY;
     DEVICE_STATE prevState = state;
     QTime pausedTime;
+    int numRounds = 4;
 
     QTimer* runTimer;
 
