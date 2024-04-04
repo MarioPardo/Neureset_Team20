@@ -14,7 +14,7 @@ class Sensor
 
 public:
     Sensor(int id, EEGFrequencyRange range);
-    void ApplyTreatment(float freq);
+    float ApplyTreatment(float domFreq,int round);
     float CalculateDominantFrequency();
     QVector<QPair<int, float>> getVoltageGraphData();
 private:
