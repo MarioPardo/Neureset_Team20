@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <QThread>
+#include <random>
 
 Sensor::Sensor(int id, EEGFrequencyType freqType): id(id), frequencyType(freqType) {
 }
@@ -11,7 +12,6 @@ float Sensor::CalculateDominantFrequency()
 {
     return 5; //rand value for now
 }
-
 
 std::vector<double> Sensor::getFrequencyRange(EEGFrequencyType freqType) {
     double minFreq, maxFreq;
@@ -39,8 +39,24 @@ std::vector<double> Sensor::getFrequencyRange(EEGFrequencyType freqType) {
     return rangeVec;
 }
 
-double Sensor::getRandomOffset(EEGFrequencyType freqType, double val)
+EEGFrequencyType getFrequencyType(float val)
 {
+
+
+}
+
+float Sensor::getRandomOffset(EEGFrequencyType freqType, float val)
+{
+    std::vector<double> ranges = getFrequencyRange(freqType);
+    double minFreq = ranges[0];
+    double maxFreq = ranges[1];
+
+    //[----I-----]  bottom range, from [ to I
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> dis(minFreq, val);
+
+    return dis(gen);
 
 }
 
@@ -60,7 +76,9 @@ float Sensor::ApplyTreatment(float domFreq, int round)
         QThread::msleep(62);
     }
 
-    int randOffset = 2; //TODO implement proper random offset
+
+
+    int randOffset = getRandomOffset(getFrequencyType(domFreq),domFreq); //TODO implement proper random offset
 
     return domFreq + randOffset;
 

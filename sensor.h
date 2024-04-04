@@ -18,6 +18,9 @@ public:
     float CalculateDominantFrequency();
     QVector<QPair<int, float>> getVoltageGraphData();
     std::vector<double> getFrequencyRange(EEGFrequencyType freqType);
+    EEGFrequencyType getFrequencyType(float val);
+    float getRandomOffset(EEGFrequencyType freqType, float val);
+
 private:
     int id;
     QVector<float> frequencies;
