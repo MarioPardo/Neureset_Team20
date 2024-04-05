@@ -39,10 +39,18 @@ std::vector<double> Sensor::getFrequencyRange(EEGFrequencyType freqType) {
     return rangeVec;
 }
 
-EEGFrequencyType getFrequencyType(float val)
-{
-
-
+EEGFrequencyType Sensor::getFrequencyType(float freq) {
+    if (freq >= 1.0 && freq <= 3.0) {
+        return EEGFrequencyType::DELTA;
+    } else if (freq >= 3.5 && freq <= 7.5) {
+        return EEGFrequencyType::THETA;
+    } else if (freq >= 8.0 && freq <= 14.0) {
+        return EEGFrequencyType::ALPHA;
+    } else if (freq >= 14.0 && freq <= 30.0) {
+        return EEGFrequencyType::BETA;
+    } else {
+        return EEGFrequencyType::BETA;
+    }
 }
 
 float Sensor::getRandomOffset(EEGFrequencyType freqType, float val)
