@@ -2,8 +2,9 @@
 
 #include <iostream>
 #include <QThread>
+#include <random>
 
-Sensor::Sensor(int id, EEGFrequencyRange range): id(id), range(range) {
+Sensor::Sensor(int id, EEGFrequencyType freqType): id(id), frequencyType(freqType) {
 }
 
 //fill when we know wtf is going on
@@ -12,6 +13,52 @@ float Sensor::CalculateDominantFrequency()
     return 5; //rand value for now
 }
 
+std::vector<double> Sensor::getFrequencyRange(EEGFrequencyType freqType) {
+    double minFreq, maxFreq;
+
+    switch (freqType) {
+    case EEGFrequencyType::DELTA:
+        minFreq = 1.0;
+        maxFreq = 3.0;
+        break;
+    case EEGFrequencyType::THETA:
+        minFreq = 3.5;
+        maxFreq = 7.5;
+        break;
+    case EEGFrequencyType::ALPHA:
+        minFreq = 8.0;
+        maxFreq = 14.0;
+        break;
+    case EEGFrequencyType::BETA:
+        minFreq = 14.0;
+        maxFreq = 30.0;
+        break;
+    }
+
+    std::vector<double> rangeVec = {minFreq, maxFreq};
+    return rangeVec;
+}
+
+EEGFrequencyType getFrequencyType(float val)
+{
+
+
+}
+
+float Sensor::getRandomOffset(EEGFrequencyType freqType, float val)
+{
+    std::vector<double> ranges = getFrequencyRange(freqType);
+    double minFreq = ranges[0];
+    double maxFreq = ranges[1];
+
+    //[----I-----]  bottom range, from [ to I
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> dis(minFreq, val);
+
+    return dis(gen);
+
+}
 
 float Sensor::ApplyTreatment(float domFreq, int round)
 {
@@ -29,7 +76,9 @@ float Sensor::ApplyTreatment(float domFreq, int round)
         QThread::msleep(62);
     }
 
-    int randOffset = 2; //TODO implement proper random offset
+
+
+    int randOffset = getRandomOffset(getFrequencyType(domFreq),domFreq); //TODO implement proper random offset
 
     return domFreq + randOffset;
 
@@ -37,23 +86,26 @@ float Sensor::ApplyTreatment(float domFreq, int round)
 
 QVector<QPair<int, float>> Sensor::getVoltageGraphData() {
     qDebug() << "reachin";
-    EEGFrequencyRange range = this->range;
+    EEGFrequencyType range = this->frequencyType;
     double minFreq, maxFreq;
+
+    //TODO change to use getFrequencyRange()
+
     switch (range) {
-        case EEGFrequencyRange::DELTA:
+    case EEGFrequencyType::DELTA:
             minFreq = 1.0;
             maxFreq = 3.0;
 
             break;
-        case EEGFrequencyRange::THETA:
+    case EEGFrequencyType::THETA:
             minFreq = 3.5;
             maxFreq = 7.5;
             break;
-        case EEGFrequencyRange::ALPHA:
+    case EEGFrequencyType::ALPHA:
             minFreq = 8.0;
             maxFreq = 14.0;
             break;
-        case EEGFrequencyRange::BETA:
+    case EEGFrequencyType::BETA:
             minFreq = 14.0;
             maxFreq = 30.0;
             break;
