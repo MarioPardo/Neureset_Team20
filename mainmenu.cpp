@@ -17,13 +17,17 @@ MainMenu::~MainMenu()
     delete ui;
 }
 
+void MainMenu::SetBatteryManager(BatteryManager* batM)
+{
+    batteryManger = batM;
+}
 
 void MainMenu::on_newsession_Btn_clicked()
 {
     //open new session UI
     cout <<endl << "New session opened." << endl ;
 
-    ActiveSessionWindow* sessionWindow = new ActiveSessionWindow(this); // Create an instance of SecondWindow
+    ActiveSessionWindow* sessionWindow = new ActiveSessionWindow(this,batteryManger); // Create an instance of SecondWindow
     sessionWindow->show();
 }
 

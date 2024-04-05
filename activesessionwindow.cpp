@@ -5,11 +5,13 @@
 
 #include <iostream>
 
-ActiveSessionWindow::ActiveSessionWindow(QWidget *parent) :
+ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM):
     QMainWindow(parent),
     ui(new Ui::ActiveSessionWindow)
 {
     ui->setupUi(this);
+
+    batteryManager = batM;
 
     //setup ui elements
     greenLED = findChild<QFrame*>("greenLED_Frame");
@@ -21,7 +23,7 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent) :
     timeRemainingLabel = findChild<QLabel*>("remainingTime_lbl");
     sessionProgressBar = findChild<QProgressBar*>("batteryProgressBar");
 
-    device = new Device();
+    device = new Device(nullptr, batteryManager);
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()

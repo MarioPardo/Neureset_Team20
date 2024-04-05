@@ -7,6 +7,8 @@
 #include "activesessionwindow.h"
 #include "sessionlogwindow.h"
 
+class BatteryManager;
+
 using namespace std;
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +23,8 @@ public:
     MainMenu(QWidget *parent = nullptr);
     ~MainMenu();
 
+    void SetBatteryManager(BatteryManager* batM);
+
 private slots:
     void on_newsession_Btn_clicked();
 
@@ -34,5 +38,8 @@ private slots:
 
 private:
     Ui::MainMenu *ui;
+
+    BatteryManager* batteryManger;
+
 };
 #endif // MAINMENU_H

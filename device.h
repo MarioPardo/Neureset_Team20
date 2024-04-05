@@ -10,12 +10,13 @@
 #include "sensor.h"
 
 
+class BatteryManager;
 
 class Device : public QObject
 {
    Q_OBJECT
 public:
-    Device(QObject *parent = nullptr);
+   Device(QObject *parent = nullptr, BatteryManager* batM = nullptr);
     ~Device();
 
     void Display(std::string);
@@ -31,6 +32,7 @@ public slots:
 
 private:
 
+    BatteryManager* batteryManager;
     QVector<Sensor*> sensors;
     QVector<Sensor*> sensorQueue;
     int treatmentRound = NULL;

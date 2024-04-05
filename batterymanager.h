@@ -19,7 +19,7 @@ public slots:
 private:
     void drainBattery();
     int batteryPercentage = 100;
-    int drainSpeed = 2;
+    int drainSpeed = 1;
 };
 
 #endif // BATTERYMANAGER_H

@@ -14,9 +14,10 @@ int main(int argc, char *argv[])
     Sensor* s = new Sensor(1, EEGFrequencyType::DELTA); // For testing
     s->getVoltageGraphData(); // For testing
 
-    //battery stuff
+
     BatteryManager batteryManager;
     batteryManager.startBatterySimulation();
+    w.SetBatteryManager(&batteryManager);
 
     return a.exec();
 }

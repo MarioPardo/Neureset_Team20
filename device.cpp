@@ -2,16 +2,18 @@
 #include <iostream>
 #include <QThread>
 #include <QTimer>
+#include "batterymanager.h"
 
-Device::Device(QObject *parent) : QObject(parent)
+Device::Device(QObject *parent, BatteryManager* batM) : QObject(parent)
 {
     std::cout << "Device Constructor" << std::endl;
+
+    batteryManager = batM;
 
     for(int i= 0; i < 7; i++) {
         Sensor* newSensor = new Sensor(i, ALPHA);
         sensors.append(newSensor);
     }
-
 
 }
 
@@ -30,6 +32,7 @@ void Device::StartSession()
 
     std::cout << "STARTING SESSION" <<std::endl;
 
+    batteryManager->setDrainSpeed(3);
     runTimer = new QTimer(this);
     connect(runTimer, &QTimer::timeout, this, &Device::run);
     runTimer->start(1500);
@@ -120,8 +123,8 @@ float Device::CalculateBaseline()
 
 void Device::EndSession()
 {
-
     std::cout<<" SESSION FINISHED" <<std::endl;
+    batteryManager->setDrainSpeed(1);
     runTimer->stop();
 }
 

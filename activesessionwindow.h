@@ -9,6 +9,8 @@
 #include <QApplication>
 
 
+class BatteryManager;
+
 class Device;
 
 namespace Ui {
@@ -20,12 +22,14 @@ class ActiveSessionWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ActiveSessionWindow(QWidget *parent = nullptr);
+    ActiveSessionWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr);
     ~ActiveSessionWindow();
 
     QFrame* greenLED;
     QFrame* blueLED;
     QFrame* redLED;
+
+    BatteryManager* batteryManager;
 
     QPlainTextEdit* displayArea;
     QProgressBar* sessionProgressBar;
