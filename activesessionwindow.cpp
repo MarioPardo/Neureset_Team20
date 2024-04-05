@@ -1,6 +1,7 @@
 #include "activesessionwindow.h"
 #include "ui_activesessionwindow.h"
 #include "device.h"
+#include "main.cpp"
 
 #include <iostream>
 
@@ -21,12 +22,16 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent) :
     sessionProgressBar = findChild<QProgressBar*>("batteryProgressBar");
 
     device = new Device();
-
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()
 {
     delete ui;
+}
+
+void ActiveSessionWindow::updateBatteryBar(int percentage)
+{
+    ui->batteryBar->setValue(percentage); // Update the progress bar
 }
 
 void ActiveSessionWindow::on_stop_Btn_clicked()

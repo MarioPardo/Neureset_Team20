@@ -36,6 +36,9 @@ public:
 
 
 private slots:
+
+    void updateBatteryBar(int percentage);
+
     void on_stop_Btn_clicked();
 
     void on_play_Btn_clicked();
