@@ -20,5 +20,7 @@ enum EEGFrequencyType {
     BETA
 };
 
+int DRAIN_RATE_SECS = 2;
+
 #endif
 

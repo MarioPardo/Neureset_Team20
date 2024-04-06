@@ -1,6 +1,6 @@
 #include "batterymanager.h"
 #include <iostream>
-#include "batterymanager.h"
+#include "defs.h"
 #include <QTimer>
 #include <QApplication>
 #include <QMessageBox>
@@ -20,7 +20,7 @@ void BatteryManager::startBatterySimulation()
     // Create a QTimer to simulate battery drain
     QTimer *batteryTimer = new QTimer(this);
     connect(batteryTimer, &QTimer::timeout, this, &BatteryManager::drainBattery);
-    batteryTimer->start(2000); // Start the timer to call drainBattery every 2 seconds
+    batteryTimer->start(DRAIN_RATE_SECS * 1000); // Start the timer to call drainBattery every 2 seconds
 }
 
 void BatteryManager::drainBattery()
