@@ -2,6 +2,8 @@
 #include <iostream>
 #include "batterymanager.h"
 #include <QTimer>
+#include <QApplication>
+#include <QMessageBox>
 
 BatteryManager::BatteryManager(QObject *parent) : QObject(parent)
 {
@@ -24,17 +26,12 @@ void BatteryManager::startBatterySimulation()
 void BatteryManager::drainBattery()
 {
     // Update battery percentage
-    batteryPercentage -= drainSpeed;
-    if (batteryPercentage < 0) {
-        batteryPercentage = 0;
+    percentage -= drainSpeed;
+    if (percentage < 0) {
+        percentage = 0;
     }
 
-    emit batteryPercentageChanged(batteryPercentage);
+    emit batteryPercentageChanged(percentage);
 
-    std::cout<< "Batery Percentage at: " << batteryPercentage <<std::endl;
-
-    if (batteryPercentage == 0) {
-        // Stop battery simulation or take appropriate action
-    }
 }
 

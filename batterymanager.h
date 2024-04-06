@@ -16,7 +16,7 @@ signals:
 
 private:
     void drainBattery();
-    int batteryPercentage = 100;
+    int percentage = 100;
     int drainSpeed = 1;
 };
 

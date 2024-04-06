@@ -57,13 +57,11 @@ void MainMenu::on_sessionlog_Btn_clicked()
     SessionLogWindow* SLW = new SessionLogWindow(this,batteryManager); // Create an instance of SecondWindow
     SLW->show();
 
-    //open session log UI
 }
 
 
 void MainMenu::on_datentime_Btn_clicked()
 {
-    //show date and time for device
     cout << endl <<"Current Date and time: "  <<  endl;
 }
 
