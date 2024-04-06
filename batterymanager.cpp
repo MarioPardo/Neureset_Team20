@@ -37,3 +37,4 @@ void BatteryManager::drainBattery()
         // Stop battery simulation or take appropriate action
     }
 }
+

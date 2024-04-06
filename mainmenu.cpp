@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QMainWindow>
 #include "batterymanager.h"
+#include <QMessageBox>
 
 using namespace std;
 
@@ -32,6 +33,12 @@ void MainMenu::SetBatteryManager(BatteryManager* batM)
 void MainMenu::updateBatteryBar(int percentage)
 {
     ui->batteryBar->setValue(percentage);
+
+    if (percentage <= 0) {
+        QMessageBox::critical(this, "Device Lost All Power", "DEVICE LOST ALL POWER");
+
+        qApp->quit();
+    }
 }
 
 void MainMenu::on_newsession_Btn_clicked()

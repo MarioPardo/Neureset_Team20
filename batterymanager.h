@@ -10,7 +10,6 @@ public:
     explicit BatteryManager(QObject *parent = nullptr);
     void setDrainSpeed(int speed);
     void startBatterySimulation();
-
 signals:
     void batteryPercentageChanged(int percentage);
 

@@ -2,6 +2,7 @@
 #include "ui_activesessionwindow.h"
 #include "device.h"
 #include "main.cpp"
+#include <QMessageBox>
 
 #include <iostream>
 
@@ -35,7 +36,14 @@ ActiveSessionWindow::~ActiveSessionWindow()
 
 void ActiveSessionWindow::updateBatteryBar(int percentage)
 {
-    ui->batteryBar->setValue(percentage); // Update the progress bar
+    ui->batteryBar->setValue(percentage);
+
+    if (percentage <= 0) {
+        QMessageBox::critical(this, "Device Lost All Power", "DEVICE LOST ALL POWER");
+
+        qApp->quit();
+    }
+
 }
 
 void ActiveSessionWindow::on_stop_Btn_clicked()
