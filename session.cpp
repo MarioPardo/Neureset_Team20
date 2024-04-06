@@ -20,16 +20,12 @@ float Session::getFirstBaseline()
     return firstBaseline;
 }
 
-float Session::getSecondBasline()
+float Session::getSecondBaseline()
 {
     return secondBaseline;
 }
+
 float Session::getAverageFrequency()
 {
     return averageFrequency;
 }
-
-
-//Session class should also handle it's permanent storage
-    // so how to read and write to permanent storage
-

@@ -10,7 +10,7 @@ public:
 
     QDateTime getDateTime();
     float getFirstBaseline();
-    float getSecondBasline();
+    float getSecondBaseline();
     float getAverageFrequency();
 
 private:
