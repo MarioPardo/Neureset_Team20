@@ -2,6 +2,7 @@
 #define SESSIONLOGWINDOW_H
 
 #include <QMainWindow>
+#include <QProgressBar>
 
 class BatteryManager;
 
@@ -14,13 +15,18 @@ class SessionLogWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit SessionLogWindow(QWidget *parent = nullptr);
+    explicit SessionLogWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr);
     ~SessionLogWindow();
 
-    void setBatteryManager(BatteryManager* batM);
+private slots:
+
+    void updateBatteryBar(int percentage);
+
 private:
     Ui::SessionLogWindow *ui;
     BatteryManager* batteryManager;
+    QProgressBar* batteryBar;
+
 
 };
 

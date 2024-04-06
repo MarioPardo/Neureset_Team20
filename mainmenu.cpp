@@ -47,8 +47,7 @@ void MainMenu::on_newsession_Btn_clicked()
 void MainMenu::on_sessionlog_Btn_clicked()
 {
     cout << endl << "Session log opened." <<  endl;
-    SessionLogWindow* SLW = new SessionLogWindow(this); // Create an instance of SecondWindow
-    SLW->setBatteryManager(batteryManager);
+    SessionLogWindow* SLW = new SessionLogWindow(this,batteryManager); // Create an instance of SecondWindow
     SLW->show();
 
     //open session log UI
@@ -72,11 +71,6 @@ void MainMenu::on_power_Btn_clicked()
 
 void MainMenu::on_batteryBar_valueChanged(int value)
 {
-    //check if slider to 0 for battery, if so start a timer and send popup to "charge battery"
-    cout << "Battery slider changed !";
-    if(value < 1)
-    {
-        cout << "Battery low!";
-    }
+
 }
 
