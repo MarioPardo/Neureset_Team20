@@ -167,11 +167,13 @@ void Device::pause()
     if(state == PAUSED)
     {
         Display("DEVICE UNPAUSED, RESUMING");
+        batteryManager->setDrainSpeed(3);
         state = prevState;
     }
     else
     {
         Display("DEVICE PAUSED");
+        batteryManager->setDrainSpeed(1);
         prevState = state;
         state = PAUSED;
         pausedTime = QTime::currentTime();
