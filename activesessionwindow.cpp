@@ -23,7 +23,7 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM):
     timeRemainingLabel = findChild<QLabel*>("remainingTime_lbl");
     batteryBar = findChild<QProgressBar*>("batteryBar");
 
-     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
+    connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
 
     device = new Device(nullptr, batteryManager);
 }

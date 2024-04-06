@@ -36,10 +36,13 @@ private slots:
 
     void on_power_Btn_clicked();
 
+    void updateBatteryBar(int percentage);
+
 private:
     Ui::MainMenu *ui;
 
-    BatteryManager* batteryManger;
+    BatteryManager* batteryManager;
+    QProgressBar* batteryBar;
 
 };
 #endif // MAINMENU_H
