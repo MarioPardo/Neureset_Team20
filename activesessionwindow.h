@@ -8,7 +8,6 @@
 #include <QLabel>
 #include <QApplication>
 
-
 class BatteryManager;
 
 class Device;
@@ -30,12 +29,11 @@ public:
     QFrame* redLED;
 
     BatteryManager* batteryManager;
+    QProgressBar* batteryBar;
 
     QPlainTextEdit* displayArea;
     QProgressBar* sessionProgressBar;
     QLabel* timeRemainingLabel;
-    QProgressBar* batteryProgressBar;
-
 
 
 
