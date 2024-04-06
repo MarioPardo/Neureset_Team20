@@ -12,3 +12,8 @@ SessionLogWindow::~SessionLogWindow()
 {
     delete ui;
 }
+
+void SessionLogWindow::setBatteryManager(BatteryManager* batM)
+{
+    batteryManager = batM;
+}

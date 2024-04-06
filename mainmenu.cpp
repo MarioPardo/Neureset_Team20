@@ -36,6 +36,7 @@ void MainMenu::on_sessionlog_Btn_clicked()
 {
     cout << endl << "Session log opened." <<  endl;
     SessionLogWindow* SLW = new SessionLogWindow(this); // Create an instance of SecondWindow
+    SLW->setBatteryManager(batteryManger);
     SLW->show();
 
     //open session log UI
