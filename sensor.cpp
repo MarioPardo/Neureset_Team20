@@ -93,7 +93,6 @@ float Sensor::ApplyTreatment(float domFreq, int round)
 }
 
 QVector<QPair<int, float>> Sensor::getVoltageGraphData() {
-    qDebug() << "reachin";
     EEGFrequencyType range = this->frequencyType;
     double minFreq, maxFreq;
 
@@ -124,7 +123,6 @@ QVector<QPair<int, float>> Sensor::getVoltageGraphData() {
 
    QVector<QPair<int, float>> timeDomainSignal;
 
-   qDebug() << freqInRange;
    for(int i = 0; i <= 60; i++) {
        float firstHarmonic = qSin(2 * float(M_PI) * (freqInRange/60 * i));
        float secondHarmonic = qSin(2 * float(M_PI) * (2 * freqInRange/60 * i));
@@ -132,7 +130,6 @@ QVector<QPair<int, float>> Sensor::getVoltageGraphData() {
        timeDomainSignal.append(QPair<int, float>(i, firstHarmonic + secondHarmonic + thirdHarmonic + 10));
    }
 
-   qDebug() << timeDomainSignal;
    return timeDomainSignal;
 }
 
