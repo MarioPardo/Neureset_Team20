@@ -31,8 +31,8 @@ void Device::StartSession()
     }
 
     std::cout << "STARTING SESSION" <<std::endl;
-
-    batteryManager->setDrainSpeed(3);
+    
+    batteryManager->fastDrain(true);
     runTimer = new QTimer(this);
     connect(runTimer, &QTimer::timeout, this, &Device::run);
     runTimer->start(1500);
@@ -124,7 +124,7 @@ float Device::CalculateBaseline()
 void Device::EndSession()
 {
     std::cout<<" SESSION FINISHED" <<std::endl;
-    batteryManager->setDrainSpeed(1);
+    batteryManager->fastDrain(false);
     runTimer->stop();
 }
 
@@ -167,13 +167,13 @@ void Device::pause()
     if(state == PAUSED)
     {
         Display("DEVICE UNPAUSED, RESUMING");
-        batteryManager->setDrainSpeed(3);
+        batteryManager->fastDrain(true);
         state = prevState;
     }
     else
     {
         Display("DEVICE PAUSED");
-        batteryManager->setDrainSpeed(1);
+        batteryManager->fastDrain(false);
         prevState = state;
         state = PAUSED;
         pausedTime = QTime::currentTime();

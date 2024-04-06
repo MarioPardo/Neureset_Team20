@@ -2,13 +2,14 @@
 #define BATTERYMANAGER_H
 
 #include <QObject>
+#include "defs.h"
 
 class BatteryManager : public QObject
 {
     Q_OBJECT
 public:
     explicit BatteryManager(QObject *parent = nullptr);
-    void setDrainSpeed(int speed);
+    void fastDrain(bool b);
     void startBatterySimulation();
 signals:
     void batteryPercentageChanged(int percentage);
@@ -17,7 +18,7 @@ signals:
 private:
     void drainBattery();
     int percentage = 100;
-    int drainSpeed = 1;
+    int drainSpeed = DRAIN_RATE_SLOW;
 };
 
 #endif // BATTERYMANAGER_H
