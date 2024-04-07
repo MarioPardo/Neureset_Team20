@@ -20,5 +20,8 @@ enum EEGFrequencyType {
     BETA
 };
 
+#define DRAIN_RATE_FAST 3;
+#define DRAIN_RATE_SLOW  1;
+
 #endif
 

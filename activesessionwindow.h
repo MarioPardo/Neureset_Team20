@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QApplication>
 
+class BatteryManager;
 
 class Device;
 
@@ -20,22 +21,26 @@ class ActiveSessionWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ActiveSessionWindow(QWidget *parent = nullptr);
+    ActiveSessionWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr);
     ~ActiveSessionWindow();
 
     QFrame* greenLED;
     QFrame* blueLED;
     QFrame* redLED;
 
+    BatteryManager* batteryManager;
+    QProgressBar* batteryBar;
+
     QPlainTextEdit* displayArea;
     QProgressBar* sessionProgressBar;
     QLabel* timeRemainingLabel;
-    QProgressBar* batteryProgressBar;
-
 
 
 
 private slots:
+
+    void updateBatteryBar(int percentage);
+
     void on_stop_Btn_clicked();
 
     void on_play_Btn_clicked();

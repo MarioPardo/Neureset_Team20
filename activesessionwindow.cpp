@@ -1,14 +1,18 @@
 #include "activesessionwindow.h"
 #include "ui_activesessionwindow.h"
 #include "device.h"
+#include "main.cpp"
+#include <QMessageBox>
 
 #include <iostream>
 
-ActiveSessionWindow::ActiveSessionWindow(QWidget *parent) :
+ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM):
     QMainWindow(parent),
     ui(new Ui::ActiveSessionWindow)
 {
     ui->setupUi(this);
+
+    batteryManager = batM;
 
     //setup ui elements
     greenLED = findChild<QFrame*>("greenLED_Frame");
@@ -18,15 +22,28 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent) :
     displayArea = findChild<QPlainTextEdit*>("display_TextEdit");
     sessionProgressBar = findChild<QProgressBar*>("timeRemainingLabel");
     timeRemainingLabel = findChild<QLabel*>("remainingTime_lbl");
-    sessionProgressBar = findChild<QProgressBar*>("batteryProgressBar");
+    batteryBar = findChild<QProgressBar*>("batteryBar");
 
-    device = new Device();
+    connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
 
+    device = new Device(nullptr, batteryManager);
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()
 {
     delete ui;
+}
+
+void ActiveSessionWindow::updateBatteryBar(int percentage)
+{
+    ui->batteryBar->setValue(percentage);
+
+    if (percentage <= 0) {
+        QMessageBox::critical(this, "Device Lost All Power", "DEVICE LOST ALL POWER");
+
+        qApp->quit();
+    }
+
 }
 
 void ActiveSessionWindow::on_stop_Btn_clicked()

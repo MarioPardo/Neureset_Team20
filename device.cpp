@@ -2,16 +2,18 @@
 #include <iostream>
 #include <QThread>
 #include <QTimer>
+#include "batterymanager.h"
 
-Device::Device(QObject *parent) : QObject(parent)
+Device::Device(QObject *parent, BatteryManager* batM) : QObject(parent)
 {
     std::cout << "Device Constructor" << std::endl;
+
+    batteryManager = batM;
 
     for(int i= 0; i < 7; i++) {
         Sensor* newSensor = new Sensor(i, ALPHA);
         sensors.append(newSensor);
     }
-
 
 }
 
@@ -29,7 +31,8 @@ void Device::StartSession()
     }
 
     std::cout << "STARTING SESSION" <<std::endl;
-
+    
+    batteryManager->fastDrain(true);
     runTimer = new QTimer(this);
     connect(runTimer, &QTimer::timeout, this, &Device::run);
     runTimer->start(1500);
@@ -120,8 +123,8 @@ float Device::CalculateBaseline()
 
 void Device::EndSession()
 {
-
     std::cout<<" SESSION FINISHED" <<std::endl;
+    batteryManager->fastDrain(false);
     runTimer->stop();
 }
 
@@ -164,11 +167,13 @@ void Device::pause()
     if(state == PAUSED)
     {
         Display("DEVICE UNPAUSED, RESUMING");
+        batteryManager->fastDrain(true);
         state = prevState;
     }
     else
     {
         Display("DEVICE PAUSED");
+        batteryManager->fastDrain(false);
         prevState = state;
         state = PAUSED;
         pausedTime = QTime::currentTime();
