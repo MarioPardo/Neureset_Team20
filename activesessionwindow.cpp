@@ -22,6 +22,7 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM):
     displayArea = findChild<QPlainTextEdit*>("display_TextEdit");
     sessionProgressBar = findChild<QProgressBar*>("timeRemainingLabel");
     timeRemainingLabel = findChild<QLabel*>("remainingTime_lbl");
+    sensorSpinBox = findChild<QSpinBox*>("sensor_spinBox");
     batteryBar = findChild<QProgressBar*>("batteryBar");
 
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
@@ -73,5 +74,11 @@ void ActiveSessionWindow::on_powerBtn_clicked()
 void ActiveSessionWindow::on_menu_Btn_clicked()
 {
     std::cout << "GOING BACK TO MAIN MENU" <<std::endl;
+}
+
+
+void ActiveSessionWindow::on_disconnect_Btn_clicked()
+{
+    device->SensorDisconnected(sensorSpinBox->value());
 }
 

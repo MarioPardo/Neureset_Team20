@@ -142,11 +142,44 @@ float Device::calcDomFreq()
 
 void Device::SensorDisconnected(int sensor)
 {
-    Display(" SENSOR " + std::to_string(sensor) + " DISCONNECTED \n ");
+    if(disconnectedSensors.find(sensor) != disconnectedSensors.end())
+        disconnectedSensors.erase(sensor);
+    else
+        disconnectedSensors.insert(sensor);
 
-    pause();
+
+    if(disconnectedSensors.empty())
+    {
+        pause(); //handles unpausing
+        return;
+    }
+    else
+    {
+        if(state != PAUSED)
+            pause();
+
+    }
+
+    std::string toOutput = setToString(disconnectedSensors);
+    Display(" Disconnected Sensors: " + toOutput +  " ");
 
 }
+
+std::string Device::setToString(const std::set<int>& mySet) {
+    std::stringstream ss;
+    ss << "[";
+    bool isFirst = true;
+    for (int num : mySet) {
+        if (!isFirst) {
+            ss << ", ";
+        }
+        ss << num;
+        isFirst = false;
+    }
+    ss << "]";
+    return ss.str();
+}
+
 
 void Device::Display(std::string str)
 {
