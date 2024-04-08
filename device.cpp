@@ -30,6 +30,9 @@ void Device::StartSession()
         return;
     }
 
+    if(!disconnectedSensors.empty())
+        return;
+
     std::cout << "STARTING SESSION" <<std::endl;
     
     batteryManager->fastDrain(true);
@@ -50,8 +53,11 @@ void Device::run()
     if(state == PAUSED)
     {
         if(pausedTime.msecsTo(QTime::currentTime()) >= 5000)
+        {
+            Display("DEVICE TIMED OUT");
             stop();
-        return;
+            return;
+        }
     }
 
     if(state == FIRST_OVERALL)
@@ -199,6 +205,9 @@ void Device::pause()
 
     if(state == PAUSED)
     {
+        if(!disconnectedSensors.empty())
+            return;
+
         Display("DEVICE UNPAUSED, RESUMING");
         batteryManager->fastDrain(true);
         state = prevState;
