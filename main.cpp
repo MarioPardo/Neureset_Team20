@@ -21,9 +21,6 @@ int main(int argc, char *argv[])
     BatteryManager batteryManager;
     batteryManager.startBatterySimulation();
     w.SetBatteryManager(&batteryManager);
-  
-    Sensor* s = new Sensor(1, EEGFrequencyType::DELTA);
-    s->getVoltageGraphData();
 
     QVector<Session> sessionInfo;
     QDateTime currentDateTime = QDateTime::currentDateTime();
