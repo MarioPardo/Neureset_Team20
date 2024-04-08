@@ -6,18 +6,22 @@
 #include <QVector>
 #include <set>
 #include <QTime>
+#include <QDateTime>
 #include <QTimer>
 #include <QObject>
+#include <sstream>
 #include "sensor.h"
 
 
 class BatteryManager;
+class MainMenu;
+class Session;
 
 class Device : public QObject
 {
    Q_OBJECT
 public:
-   Device(QObject *parent = nullptr, BatteryManager* batM = nullptr);
+   Device(QObject *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* mainM = nullptr);
     ~Device();
 
     void Display(std::string);
@@ -33,6 +37,7 @@ public slots:
 
 private:
 
+    MainMenu* mainMenu;
     BatteryManager* batteryManager;
     QVector<Sensor*> sensors;
     QVector<Sensor*> sensorQueue;

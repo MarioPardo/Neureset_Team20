@@ -4,10 +4,13 @@
 #include <QMainWindow>
 #include <QDialog>
 #include <iostream>
+#include <QObject>
+#include <vector>
 #include "activesessionwindow.h"
 #include "sessionlogwindow.h"
 
 class BatteryManager;
+class Session;
 
 using namespace std;
 
@@ -22,6 +25,7 @@ class MainMenu : public QMainWindow
 public:
     MainMenu(QWidget *parent = nullptr);
     ~MainMenu();
+    void addSession(Session*);
 
     void SetBatteryManager(BatteryManager* batM);
 
@@ -41,8 +45,11 @@ private slots:
 private:
     Ui::MainMenu *ui;
 
+
+    vector<Session*> sessions;
     BatteryManager* batteryManager;
     QProgressBar* batteryBar;
+
 
 };
 #endif // MAINMENU_H
