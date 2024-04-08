@@ -4,6 +4,7 @@
 #include "defs.h"
 #include <string>
 #include <QVector>
+#include <set>
 #include <QTime>
 #include <QTimer>
 #include <QObject>
@@ -35,6 +36,7 @@ private:
     BatteryManager* batteryManager;
     QVector<Sensor*> sensors;
     QVector<Sensor*> sensorQueue;
+    std::set<int> disconnectedSensors;
     int treatmentRound = NULL;
     int powerPercentage = 100;
     DEVICE_STATE state = READY;
@@ -49,6 +51,8 @@ private:
 
     float CalculateBaseline();
     float calcDomFreq();
+
+    std::string setToString(const std::set<int>& mySet);
 
     void EndSession();
 

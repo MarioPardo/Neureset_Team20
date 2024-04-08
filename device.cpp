@@ -30,6 +30,9 @@ void Device::StartSession()
         return;
     }
 
+    if(!disconnectedSensors.empty())
+        return;
+
     std::cout << "STARTING SESSION" <<std::endl;
     
     batteryManager->fastDrain(true);
@@ -50,8 +53,11 @@ void Device::run()
     if(state == PAUSED)
     {
         if(pausedTime.msecsTo(QTime::currentTime()) >= 5000)
+        {
+            Display("DEVICE TIMED OUT");
             stop();
-        return;
+            return;
+        }
     }
 
     if(state == FIRST_OVERALL)
@@ -142,11 +148,44 @@ float Device::calcDomFreq()
 
 void Device::SensorDisconnected(int sensor)
 {
-    Display(" SENSOR " + std::to_string(sensor) + " DISCONNECTED \n ");
+    if(disconnectedSensors.find(sensor) != disconnectedSensors.end())
+        disconnectedSensors.erase(sensor);
+    else
+        disconnectedSensors.insert(sensor);
 
-    pause();
+
+    if(disconnectedSensors.empty())
+    {
+        pause(); //handles unpausing
+        return;
+    }
+    else
+    {
+        if(state != PAUSED)
+            pause();
+
+    }
+
+    std::string toOutput = setToString(disconnectedSensors);
+    Display(" Disconnected Sensors: " + toOutput +  " ");
 
 }
+
+std::string Device::setToString(const std::set<int>& mySet) {
+    std::stringstream ss;
+    ss << "[";
+    bool isFirst = true;
+    for (int num : mySet) {
+        if (!isFirst) {
+            ss << ", ";
+        }
+        ss << num;
+        isFirst = false;
+    }
+    ss << "]";
+    return ss.str();
+}
+
 
 void Device::Display(std::string str)
 {
@@ -166,6 +205,9 @@ void Device::pause()
 
     if(state == PAUSED)
     {
+        if(!disconnectedSensors.empty())
+            return;
+
         Display("DEVICE UNPAUSED, RESUMING");
         batteryManager->fastDrain(true);
         state = prevState;

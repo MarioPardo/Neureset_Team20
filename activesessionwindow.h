@@ -7,6 +7,7 @@
 #include <QProgressBar>
 #include <QLabel>
 #include <QApplication>
+#include <QSpinBox>
 
 class BatteryManager;
 
@@ -34,6 +35,7 @@ public:
     QPlainTextEdit* displayArea;
     QProgressBar* sessionProgressBar;
     QLabel* timeRemainingLabel;
+    QSpinBox* sensorSpinBox;
 
 
 
@@ -50,6 +52,8 @@ private slots:
     void on_powerBtn_clicked();
 
     void on_menu_Btn_clicked();
+
+    void on_disconnect_Btn_clicked();
 
 private:
     Ui::ActiveSessionWindow *ui;
