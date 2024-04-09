@@ -1,9 +1,11 @@
 #include "sessionlogwindow.h"
 #include "ui_sessionlogwindow.h"
 #include "batterymanager.h"
+#include "session.h"
+
 #include <QMessageBox>
 
-SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM) :
+SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM, std::vector <Session*> vec) :
     QMainWindow(parent),
     ui(new Ui::SessionLogWindow)
 {
@@ -12,6 +14,8 @@ SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM) :
     batteryManager = batM;
     batteryBar = findChild<QProgressBar*>("batteryBar");
 
+
+    checkoutSessions = vec;
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &SessionLogWindow::updateBatteryBar);
 }
 
