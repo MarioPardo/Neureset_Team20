@@ -6,6 +6,7 @@
 #include <QObject>
 #include <vector>
 
+class MainMenu;
 class BatteryManager;
 class Session;
 
@@ -18,12 +19,17 @@ class SessionLogWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit SessionLogWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr, std::vector <Session*> v = std::vector<Session*>() );
+    explicit SessionLogWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr, std::vector <Session*> v = std::vector<Session*>(), MainMenu* m = nullptr
+                              );
     ~SessionLogWindow();
+    MainMenu* mainMenu;
+
 
 private slots:
 
     void updateBatteryBar(int percentage);
+    void onSessionAdded(Session* session); // Slot to handle session added event
+
 
 private:
     Ui::SessionLogWindow *ui;

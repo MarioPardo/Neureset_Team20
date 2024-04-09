@@ -30,6 +30,9 @@ void MainMenu::addSession(Session* session)
     sessions.push_back(session); // Store pointer to Device object in log
     std::cout << "Session added" << std::endl;
     //update array in sessionlog?
+    emit sessionAddedSignal(session);
+
+
 
 
 
@@ -68,7 +71,7 @@ void MainMenu::on_newsession_Btn_clicked()
 void MainMenu::on_sessionlog_Btn_clicked()
 {
     cout << endl << "Session log opened." <<  endl;
-    SessionLogWindow* SLW = new SessionLogWindow(this,batteryManager, sessions); // Create an instance of SecondWindow
+    SessionLogWindow* SLW = new SessionLogWindow(this,batteryManager, sessions,this); // Create an instance of SecondWindow
     SLW->show();
 
 }
