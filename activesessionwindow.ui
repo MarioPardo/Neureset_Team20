@@ -284,6 +284,19 @@
      <string>Disconnect Sensor</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="wave_Btn">
+    <property name="geometry">
+     <rect>
+      <x>389</x>
+      <y>110</y>
+      <width>91</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>VIEW WAVES</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -291,7 +304,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>24</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

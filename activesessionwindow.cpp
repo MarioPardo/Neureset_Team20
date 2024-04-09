@@ -3,7 +3,7 @@
 #include "device.h"
 #include "main.cpp"
 #include <QMessageBox>
-
+#include "waveformwindow.h"
 #include <iostream>
 
 ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM):
@@ -82,3 +82,9 @@ void ActiveSessionWindow::on_disconnect_Btn_clicked()
     device->SensorDisconnected(sensorSpinBox->value());
 }
 
+void ActiveSessionWindow::on_wave_Btn_clicked()
+{
+    cout << endl << "Waveform window opened." <<  endl;
+    WaveformWindow* WW = new WaveformWindow(nullptr,batteryManager); // Create an instance of SecondWindow
+    WW->show();
+}

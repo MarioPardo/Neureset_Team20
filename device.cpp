@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QTimer>
 #include "batterymanager.h"
+#include <sstream>
 
 Device::Device(QObject *parent, BatteryManager* batM) : QObject(parent)
 {

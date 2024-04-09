@@ -55,6 +55,8 @@ private slots:
 
     void on_disconnect_Btn_clicked();
 
+    void on_wave_Btn_clicked();
+
 private:
     Ui::ActiveSessionWindow *ui;
 

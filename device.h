@@ -10,7 +10,6 @@
 #include <QObject>
 #include "sensor.h"
 
-
 class BatteryManager;
 
 class Device : public QObject

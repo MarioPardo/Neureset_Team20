@@ -1,6 +1,6 @@
 QT += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++17
 
@@ -17,7 +17,9 @@ SOURCES += \
     sensor.cpp \
     device.cpp \
     session.cpp \
-    sessionlogwindow.cpp
+    sessionlogwindow.cpp \
+    waveformwindow.cpp \
+    qcustomplot.cpp
 
 
 HEADERS += \
@@ -29,14 +31,18 @@ HEADERS += \
     device.h \
     session.h \
     sessionlogwindow.h \
-    defs.h
+    defs.h \
+    waveformwindow.h \
+    qcustomplot.h
 
 
 FORMS += \
     activesessionwindow.ui \
     mainmenu.ui \
     pcwindow.ui \
-    sessionlogwindow.ui
+    sessionlogwindow.ui \
+    waveformwindow.ui \
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
