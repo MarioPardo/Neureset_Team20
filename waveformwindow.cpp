@@ -17,7 +17,6 @@ WaveformWindow::WaveformWindow(QWidget *parent, BatteryManager* batM)
 }
 
 void WaveformWindow::updateGraph(QVector<QPair<int, float>>& graphData) {
-    qDebug() << "reaching heeeerrrreee";
     qDebug() << graphData.at(2);
     ui->customPlot->graph(0)->data().data()->clear();
     for(QPair<int, float> dataPoint: graphData) {
