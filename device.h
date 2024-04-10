@@ -26,6 +26,7 @@ public:
     void pause();
     void stop();
     void reset();
+    Sensor* getSensor(int index);
 
 public slots:
     void run();
@@ -54,7 +55,7 @@ private:
     std::string setToString(const std::set<int>& mySet);
 
     void EndSession();
-
+    EEGFrequencyType DESIRED_FREQUENCY_TYPE = DELTA;
 };
 
 #endif // DEVICE_H

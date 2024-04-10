@@ -19,6 +19,14 @@ public:
     ~WaveformWindow();
     BatteryManager* batteryManager;
 
+signals:
+    void selectElectrode(int index);
+
+public slots:
+    void updateGraph(QVector<QPair<int, float>>& data);
+    void on_electrodeSelectionButton_pressed();
+    void updateBatteryBar(int percentage);
+
 private:
     Ui::WaveformWindow *ui;
 
