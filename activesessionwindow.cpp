@@ -31,7 +31,6 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, 
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
 
     device = new Device(nullptr, batteryManager,mainMenu, displayArea);
-
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()
@@ -90,5 +89,14 @@ void ActiveSessionWindow::on_wave_Btn_clicked()
 {
     cout << endl << "Waveform window opened." <<  endl;
     WaveformWindow* WW = new WaveformWindow(nullptr,batteryManager); // Create an instance of SecondWindow
+    //connect waveform window and active session window slots/signals
+    connect(WW, &WaveformWindow::selectElectrode, this, &ActiveSessionWindow::handleElectrodeSelected);
+    connect(this, &ActiveSessionWindow::updateWave, WW, &WaveformWindow::updateGraph);
     WW->show();
+}
+
+void ActiveSessionWindow::handleElectrodeSelected(int index){
+    QVector<QPair<int, float>> sensorData = device->getSensor(index)->generateVoltageGraphData();
+    qDebug() << index;
+    emit updateWave(sensorData);
 }

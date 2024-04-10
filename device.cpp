@@ -16,8 +16,9 @@ Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTex
     mainMenu = mainM;
     displayArea = textEdit;
 
+
     for(int i= 0; i < 7; i++) {
-        Sensor* newSensor = new Sensor(i, ALPHA);
+        Sensor* newSensor = new Sensor(i, DESIRED_FREQUENCY_TYPE);
         sensors.append(newSensor);
     }
 
@@ -26,6 +27,10 @@ Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTex
 Device::~Device()
 {
     std::cout<< "Device DTOR" <<std::endl;
+}
+
+Sensor* Device::getSensor(int index) {
+    return this->sensors.at(index);
 }
 
 void Device::StartSession()
@@ -128,6 +133,8 @@ void Device::run()
     }
 
 }
+
+
 
 float Device::CalculateBaseline()
 {
@@ -251,4 +258,5 @@ void Device::reset()
     Display("RESETTING");
     //quit ui and go back to main menu
 }
+
 

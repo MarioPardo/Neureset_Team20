@@ -16,15 +16,23 @@ public:
     Sensor(int id, EEGFrequencyType freqType);
     float ApplyTreatment(float domFreq,int round);
     float CalculateDominantFrequency();
-    QVector<QPair<int, float>> getVoltageGraphData();
+    void generateFrequenciesAndAmplitudes(float targetFrequency = -1);
+    QVector<QPair<int, float>> generateVoltageGraphData();
     std::vector<double> getFrequencyRange(EEGFrequencyType freqType);
     EEGFrequencyType getFrequencyType(float freq);
     float getRandomOffset(EEGFrequencyType freqType, float val);
+
 
 private:
     int id;
     QVector<float> frequencies;
     EEGFrequencyType frequencyType;
+    int amplitude1;
+    int amplitude2;
+    int amplitude3;
+    float frequency1;
+    float frequency2;
+    float frequency3;
 };
 
 
