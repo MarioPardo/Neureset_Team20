@@ -11,6 +11,7 @@
 #include <QObject>
 #include <sstream>
 #include "sensor.h"
+#include <QPlainTextEdit>
 
 
 class BatteryManager;
@@ -21,7 +22,9 @@ class Device : public QObject
 {
    Q_OBJECT
 public:
-   Device(QObject *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* mainM = nullptr);
+
+   Device(QObject *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* mainM = nullptr,QPlainTextEdit* textEdit = nullptr);
+
     ~Device();
 
     void Display(std::string);
@@ -50,6 +53,7 @@ private:
     int numRounds = 4;
 
     QTimer* runTimer;
+    QPlainTextEdit* displayArea;
 
     float firstBaseline = NULL;
     float secondBaseline = NULL;

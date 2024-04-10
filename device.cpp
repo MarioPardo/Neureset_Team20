@@ -8,12 +8,13 @@
 
 
 
-Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM) : QObject(parent)
+Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTextEdit* textEdit) : QObject(parent)
 {
     std::cout << "Device Constructor" << std::endl;
 
     batteryManager = batM;
     mainMenu = mainM;
+    displayArea = textEdit;
 
     for(int i= 0; i < 7; i++) {
         Sensor* newSensor = new Sensor(i, ALPHA);
@@ -67,7 +68,7 @@ void Device::run()
 
     if(state == FIRST_OVERALL)
     {
-        std::cout << "Calculating first Baseline" <<std::endl;
+        Display("Calculating first Baseline");
         firstBaseline = CalculateBaseline();
 
         //finished calculating baseline, now prep for next step
@@ -78,6 +79,7 @@ void Device::run()
 
         state = APPLYING_TREATMENT;
         treatmentRound = 1;
+        Display("Starting Treatment");
         return;
     }
     else if(state == APPLYING_TREATMENT)
@@ -86,7 +88,7 @@ void Device::run()
 
         if(sensorQueue.isEmpty())
         {
-            std::cout<<"Finished round #: "<< treatmentRound << std::endl;
+            Display("Finished round #: " + std::to_string(treatmentRound) + "!" );
 
             if(treatmentRound  == numRounds) //finished treatment, go to next step
             {
@@ -115,7 +117,7 @@ void Device::run()
     }
     else if(state == SECOND_OVERALL)
     {
-        std::cout << "Calculating Second Baseline Baseline" <<std::endl;
+        Display("Calculating Second Baseline Baseline");
         secondBaseline = CalculateBaseline();
 
         EndSession();
@@ -203,8 +205,8 @@ std::string Device::setToString(const std::set<int>& mySet) {
 
 void Device::Display(std::string str)
 {
-    std::cout << str << std::endl;
-    //TODO hook up to UI display
+    displayArea->clear();
+    displayArea->setPlainText(QString::fromStdString(str));
 }
 
 

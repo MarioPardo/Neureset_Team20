@@ -22,7 +22,7 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, 
     blueLED = findChild<QFrame*>("blueLED_Frame");
     redLED = findChild<QFrame*>("redLED_Frame");
 
-    displayArea = findChild<QPlainTextEdit*>("display_TextEdit");
+    displayArea = findChild<QPlainTextEdit*>("plainTextEdit");
     sessionProgressBar = findChild<QProgressBar*>("timeRemainingLabel");
     timeRemainingLabel = findChild<QLabel*>("remainingTime_lbl");
     sensorSpinBox = findChild<QSpinBox*>("sensor_spinBox");
@@ -30,7 +30,8 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, 
 
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
 
-    device = new Device(nullptr, batteryManager,mainMenu);
+    device = new Device(nullptr, batteryManager,mainMenu, displayArea);
+
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()
