@@ -29,3 +29,7 @@ float Session::getAverageFrequency()
 {
     return averageFrequency;
 }
+
+QString Session::toString() const {
+    return dateTime.toString();
+}

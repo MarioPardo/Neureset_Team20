@@ -7,10 +7,10 @@
 #include <QObject>
 #include <vector>
 #include "activesessionwindow.h"
-#include "sessionlogwindow.h"
 
 class BatteryManager;
 class Session;
+class SessionLogWindow;
 
 using namespace std;
 
@@ -28,6 +28,8 @@ public:
     void addSession(Session*);
 
     void SetBatteryManager(BatteryManager* batM);
+    vector<Session*> getSessions() const;
+
 
 private slots:
     void on_newsession_Btn_clicked();
@@ -41,11 +43,9 @@ private slots:
     void on_power_Btn_clicked();
 
     void updateBatteryBar(int percentage);
-signals:
-    void sessionAddedSignal(Session* session);
+
 private:
     Ui::MainMenu *ui;
-
 
     vector<Session*> sessions;
     BatteryManager* batteryManager;

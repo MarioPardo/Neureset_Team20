@@ -23,13 +23,14 @@ public:
                               );
     ~SessionLogWindow();
     MainMenu* mainMenu;
+    void updateSessionLog(); // Declaration of updateSessionLog function
+
 
 
 private slots:
 
-    void updateBatteryBar(int percentage);
-    void onSessionAdded(Session* session); // Slot to handle session added event
-
+    void updateBatteryBar(int percentage);    
+    void on_pushButton_clicked();
 
 private:
     Ui::SessionLogWindow *ui;

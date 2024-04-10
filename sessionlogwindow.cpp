@@ -4,7 +4,9 @@
 #include "session.h"
 #include "mainmenu.h"
 
+#include <QStandardItemModel> // Include the necessary header for QStandardItemModel
 #include <QMessageBox>
+#include <QString>
 
 SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM, std::vector <Session*> vec,MainMenu* m) :
     QMainWindow(parent),
@@ -15,12 +17,22 @@ SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM, std::v
     batteryManager = batM;
     batteryBar = findChild<QProgressBar*>("batteryBar");
     mainMenu = m;
+    //get sessions
 
 
-    checkoutSessions = vec;
+    checkoutSessions = m->getSessions();
+
+    /*delete aft*/
+    for (Session* session : checkoutSessions) {
+        QString sessionString = session->toString(); // Assuming toString() returns session details
+        cout << "Session string: " << endl << sessionString.toStdString() ;
+    }
+
+
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &SessionLogWindow::updateBatteryBar);
 
-    connect(mainMenu, &MainMenu::sessionAddedSignal, this, &SessionLogWindow::onSessionAdded);
+    //connect(mainMenu, &MainMenu::sessionAddedSignal, this, &SessionLogWindow::onSessionAdded);
+    updateSessionLog();
 
 }
 
@@ -41,8 +53,31 @@ void SessionLogWindow::updateBatteryBar(int percentage)
     }
 }
 
-void SessionLogWindow::onSessionAdded(Session* session)
+
+
+void SessionLogWindow::updateSessionLog()
 {
-    // Add the new session to the checkoutSessions vector
-    checkoutSessions.push_back(session);
+
+    checkoutSessions = mainMenu->getSessions();
+
+
+    QStandardItemModel *model = new QStandardItemModel();
+
+    // Populate the model with session details
+    for (Session* session : checkoutSessions) {
+        QString sessionString = session->toString(); // Assuming toString() returns session details
+        cout << "Session string: " << endl << sessionString.toStdString() ;
+        QStandardItem *listItem = new QStandardItem(sessionString);
+        model->appendRow(listItem);
+    }
+
+    // Set the model for listView_2
+    ui->listView_2->setModel(model);
 }
+
+void SessionLogWindow::on_pushButton_clicked()
+{
+    updateSessionLog();
+
+}
+
