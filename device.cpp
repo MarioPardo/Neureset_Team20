@@ -3,14 +3,18 @@
 #include <QThread>
 #include <QTimer>
 #include "batterymanager.h"
+#include "mainmenu.h"
+#include "session.h"
 
-Device::Device(QObject *parent, BatteryManager* batM, QPlainTextEdit* textEdit) : QObject(parent)
+
+
+Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTextEdit* textEdit) : QObject(parent)
 {
     std::cout << "Device Constructor" << std::endl;
 
     batteryManager = batM;
+    mainMenu = mainM;
     displayArea = textEdit;
-
 
     for(int i= 0; i < 7; i++) {
         Sensor* newSensor = new Sensor(i, ALPHA);
@@ -132,9 +136,18 @@ float Device::CalculateBaseline()
 
 void Device::EndSession()
 {
+    if(mainMenu == nullptr)
+    {
+        cout << "null";
+    }
     std::cout<<" SESSION FINISHED" <<std::endl;
     batteryManager->fastDrain(false);
     runTimer->stop();
+
+    QDateTime dateTime = QDateTime::currentDateTime();
+    Session *session = new Session(dateTime,firstBaseline,secondBaseline,0.00);
+    mainMenu->addSession(session);
+
 }
 
 

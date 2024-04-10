@@ -2,6 +2,8 @@
 #define SESSION_H
 
 #include <QDateTime>
+#include <QString>
+
 
 class Session
 {
@@ -12,6 +14,9 @@ public:
     float getFirstBaseline();
     float getSecondBaseline();
     float getAverageFrequency();
+    QString toString() const; // New toString function declaration
+
+
 
 private:
     QDateTime dateTime;

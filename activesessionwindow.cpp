@@ -2,17 +2,20 @@
 #include "ui_activesessionwindow.h"
 #include "device.h"
 #include "main.cpp"
+#include "mainmenu.h"
+
 #include <QMessageBox>
 
 #include <iostream>
 
-ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM):
+ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, MainMenu* m):
     QMainWindow(parent),
     ui(new Ui::ActiveSessionWindow)
 {
     ui->setupUi(this);
 
     batteryManager = batM;
+    mainMenu = m;
 
     //setup ui elements
     greenLED = findChild<QFrame*>("greenLED_Frame");
@@ -27,7 +30,8 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM):
 
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
 
-    device = new Device(nullptr, batteryManager, displayArea);
+    device = new Device(nullptr, batteryManager,mainMenu, displayArea);
+
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()
