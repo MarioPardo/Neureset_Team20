@@ -17,6 +17,7 @@ Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTex
     displayArea = textEdit;
 
 
+
     for(int i= 0; i < 7; i++) {
         Sensor* newSensor = new Sensor(i, DESIRED_FREQUENCY_TYPE);
         sensors.append(newSensor);
