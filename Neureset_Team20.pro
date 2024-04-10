@@ -11,7 +11,6 @@ CONFIG += c++17
 SOURCES += \
     activesessionwindow.cpp \
     batterymanager.cpp \
-    graphdata.cpp \
     main.cpp \
     mainmenu.cpp \
     pcwindow.cpp \
@@ -26,7 +25,6 @@ SOURCES += \
 HEADERS += \
     activesessionwindow.h \
     batterymanager.h \
-    graphdata.h \
     mainmenu.h \
     pcwindow.h \
     sensor.h \
