@@ -10,6 +10,7 @@
 #include <QSpinBox>
 
 class BatteryManager;
+class MainMenu;
 
 class Device;
 
@@ -22,12 +23,14 @@ class ActiveSessionWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    ActiveSessionWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr);
+    ActiveSessionWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr,MainMenu* m = nullptr);
     ~ActiveSessionWindow();
 
     QFrame* greenLED;
     QFrame* blueLED;
     QFrame* redLED;
+
+    MainMenu* mainMenu;
 
     BatteryManager* batteryManager;
     QProgressBar* batteryBar;

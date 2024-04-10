@@ -2,24 +2,27 @@
 #include "ui_activesessionwindow.h"
 #include "device.h"
 #include "main.cpp"
+#include "mainmenu.h"
+
 #include <QMessageBox>
 #include "waveformwindow.h"
 #include <iostream>
 
-ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM):
+ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, MainMenu* m):
     QMainWindow(parent),
     ui(new Ui::ActiveSessionWindow)
 {
     ui->setupUi(this);
 
     batteryManager = batM;
+    mainMenu = m;
 
     //setup ui elements
     greenLED = findChild<QFrame*>("greenLED_Frame");
     blueLED = findChild<QFrame*>("blueLED_Frame");
     redLED = findChild<QFrame*>("redLED_Frame");
 
-    displayArea = findChild<QPlainTextEdit*>("display_TextEdit");
+    displayArea = findChild<QPlainTextEdit*>("plainTextEdit");
     sessionProgressBar = findChild<QProgressBar*>("timeRemainingLabel");
     timeRemainingLabel = findChild<QLabel*>("remainingTime_lbl");
     sensorSpinBox = findChild<QSpinBox*>("sensor_spinBox");
@@ -27,7 +30,8 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM):
 
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
 
-    device = new Device(nullptr, batteryManager);
+    device = new Device(nullptr, batteryManager,mainMenu, displayArea);
+
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()

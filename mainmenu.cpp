@@ -5,6 +5,8 @@
 #include <QMainWindow>
 #include "batterymanager.h"
 #include <QMessageBox>
+#include "sessionlogwindow.h"
+
 
 using namespace std;
 
@@ -12,15 +14,27 @@ MainMenu::MainMenu(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainMenu)
 {
+    std::cout << "Main Menu Constructor" << std::endl;
+
     ui->setupUi(this);
 
     batteryBar = findChild<QProgressBar*>("batteryBar");
+
 }
 
 MainMenu::~MainMenu()
 {
     delete ui;
 }
+
+
+void MainMenu::addSession(Session* session)
+{
+    sessions.push_back(session); // Store pointer to Device object in log
+    std::cout << "Session added" << std::endl;
+    //update array in sessionlog?
+}
+
 
 void MainMenu::SetBatteryManager(BatteryManager* batM)
 {
@@ -46,7 +60,7 @@ void MainMenu::on_newsession_Btn_clicked()
     //open new session UI
     cout <<endl << "New session opened." << endl ;
 
-    ActiveSessionWindow* sessionWindow = new ActiveSessionWindow(this,batteryManager); // Create an instance of SecondWindow
+    ActiveSessionWindow* sessionWindow = new ActiveSessionWindow(this,batteryManager,this); // Create an instance of SecondWindow
     sessionWindow->show();
 }
 
@@ -54,7 +68,8 @@ void MainMenu::on_newsession_Btn_clicked()
 void MainMenu::on_sessionlog_Btn_clicked()
 {
     cout << endl << "Session log opened." <<  endl;
-    SessionLogWindow* SLW = new SessionLogWindow(this,batteryManager); // Create an instance of SecondWindow
+    SessionLogWindow* SLW = new SessionLogWindow(this,batteryManager, sessions,this); // Create an instance of SecondWindow
+
     SLW->show();
 
 }
@@ -77,5 +92,9 @@ void MainMenu::on_power_Btn_clicked()
 void MainMenu::on_batteryBar_valueChanged(int value)
 {
 
+}
+
+vector<Session*> MainMenu::getSessions() const {
+    return sessions;
 }
 
