@@ -40,6 +40,9 @@ public:
     QLabel* timeRemainingLabel;
     QSpinBox* sensorSpinBox;
 
+signals:
+    void openWaveformWindow();
+    void updateWave(QVector<QPair<int, float>>& graphData);
 
 
 private slots:
@@ -57,6 +60,10 @@ private slots:
     void on_menu_Btn_clicked();
 
     void on_disconnect_Btn_clicked();
+
+    void on_wave_Btn_clicked();
+
+    void handleElectrodeSelected(int index);
 
 private:
     Ui::ActiveSessionWindow *ui;

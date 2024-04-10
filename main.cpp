@@ -1,5 +1,4 @@
 #include "mainmenu.h"
-#include "sensor.h"
 #include "batterymanager.h"
 #include "session.h"
 #include <iostream>
@@ -14,9 +13,8 @@ int main(int argc, char *argv[])
     w.show();
 
     // Sensor initialization code (for testing)
-    Sensor* s = new Sensor(1, EEGFrequencyType::DELTA); // For testing
-    s->getVoltageGraphData(); // For testing
-
+    // Sensor* s = new Sensor(1, EEGFrequencyType::DELTA); // For testing
+    // QVector<QPair<int, float>> data = s->generateVoltageGraphData(); // For testing
 
     BatteryManager batteryManager;
     batteryManager.startBatterySimulation();
