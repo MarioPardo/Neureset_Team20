@@ -30,8 +30,18 @@ Device::~Device()
     std::cout<< "Device DTOR" <<std::endl;
 }
 
-Sensor* Device::getSensor(int index) {
+
+Sensor* Device::getSensor(int index)
+{
     return this->sensors.at(index);
+}
+
+
+void Device::setLEDLights(QFrame* green, QFrame* blue, QFrame* red)
+{
+    greenLED = green;
+    blueLED = blue;
+    redLED = red;
 }
 
 void Device::StartSession()
@@ -45,8 +55,8 @@ void Device::StartSession()
     if(!disconnectedSensors.empty())
         return;
 
-    std::cout << "STARTING SESSION" <<std::endl;
-    
+    Display("STARTING SESSION");
+    blueLED->setStyleSheet("background-color: blue;");
     batteryManager->fastDrain(true);
     runTimer = new QTimer(this);
     connect(runTimer, &QTimer::timeout, this, &Device::run);
@@ -64,7 +74,7 @@ void Device::run()
 
     if(state == PAUSED)
     {
-        if(pausedTime.msecsTo(QTime::currentTime()) >= 5000)
+        if(pausedTime.msecsTo(QTime::currentTime()) >= pauseTimeout)
         {
             Display("DEVICE TIMED OUT");
             stop();
@@ -90,8 +100,6 @@ void Device::run()
     }
     else if(state == APPLYING_TREATMENT)
     {
-
-
         if(sensorQueue.isEmpty())
         {
             Display("Finished round #: " + std::to_string(treatmentRound) + "!" );
@@ -116,7 +124,9 @@ void Device::run()
         Sensor* sensor = sensorQueue.front();
         sensorQueue.erase(sensorQueue.begin());
 
+
         float domFreq = sensor->CalculateDominantFrequency();
+        flashFrame(greenLED,"green");
         sensor->ApplyTreatment(domFreq,treatmentRound);
 
         return;
@@ -148,7 +158,7 @@ void Device::EndSession()
     {
         cout << "null";
     }
-    std::cout<<" SESSION FINISHED" <<std::endl;
+    Display(" SESSION FINISHED");
     batteryManager->fastDrain(false);
     runTimer->stop();
 
@@ -159,7 +169,6 @@ void Device::EndSession()
 }
 
 
-//takes in a bunch of frequencies from sensor to make calculation
 float Device::calcDomFreq()
 {
     float totalDomFreq = 0.0;
@@ -173,7 +182,7 @@ float Device::calcDomFreq()
 void Device::SensorDisconnected(int sensor)
 {
     if(disconnectedSensors.find(sensor) != disconnectedSensors.end())
-        disconnectedSensors.erase(sensor);
+        disconnectedSensors.erase(sensor);  //if reconnecting already disconnected sensor
     else
         disconnectedSensors.insert(sensor);
 
@@ -192,7 +201,7 @@ void Device::SensorDisconnected(int sensor)
 
     std::string toOutput = setToString(disconnectedSensors);
     Display(" Disconnected Sensors: " + toOutput +  " ");
-
+    flashFrame(redLED, "red");
 }
 
 std::string Device::setToString(const std::set<int>& mySet) {
@@ -210,6 +219,18 @@ std::string Device::setToString(const std::set<int>& mySet) {
     return ss.str();
 }
 
+
+void Device::flashFrame(QFrame* frame, std::string color) {
+
+    frame->setStyleSheet("background-color: " + QString::fromStdString(color) + ";");
+    frame->update();
+    QApplication::processEvents();
+    QThread::msleep(200);
+    frame->setStyleSheet("background-color: lightgrey;");
+    frame->update();
+    QApplication::processEvents();
+
+}
 
 void Device::Display(std::string str)
 {

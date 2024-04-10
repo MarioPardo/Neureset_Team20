@@ -29,6 +29,8 @@ public:
     void Display(std::string);
     void SensorDisconnected(int sensor);
 
+    void setLEDLights(QFrame* green, QFrame* blue, QFrame* red);
+
     void StartSession();
     void pause();
     void stop();
@@ -51,9 +53,17 @@ private:
     DEVICE_STATE prevState = state;
     QTime pausedTime;
     int numRounds = 4;
+    int pauseTimeout = 7000;
 
     QTimer* runTimer;
     QPlainTextEdit* displayArea;
+
+    QFrame* greenLED;
+    QFrame* blueLED;
+    QFrame* redLED;
+
+    void flashFrame(QFrame* frame, std::string color);
+
 
     float firstBaseline = NULL;
     float secondBaseline = NULL;
