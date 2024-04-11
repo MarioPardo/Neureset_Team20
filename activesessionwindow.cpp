@@ -3,6 +3,7 @@
 #include "device.h"
 #include "main.cpp"
 #include "mainmenu.h"
+#include <QThread>
 
 #include <QMessageBox>
 #include "waveformwindow.h"
@@ -88,7 +89,7 @@ void ActiveSessionWindow::on_powerBtn_clicked()
 
 void ActiveSessionWindow::on_menu_Btn_clicked()
 {
-    std::cout << "GOING BACK TO MAIN MENU" <<std::endl;
+    this->showMinimized();
 }
 
 
