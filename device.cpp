@@ -8,13 +8,14 @@
 #include "session.h"
 
 
-Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTextEdit* textEdit) : QObject(parent)
+Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTextEdit* textEdit, ActiveSessionWindow* activesesh) : QObject(parent)
 {
     std::cout << "Device Constructor" << std::endl;
 
     batteryManager = batM;
     mainMenu = mainM;
     displayArea = textEdit;
+    activeSessionWindow = activesesh;
 
 
 
@@ -77,7 +78,7 @@ void Device::run()
         if(pausedTime.msecsTo(QTime::currentTime()) >= pauseTimeout)
         {
             Display("DEVICE TIMED OUT");
-            stop();
+            activeSessionWindow->on_stop_Btn_clicked();
             return;
         }
     }
@@ -272,13 +273,15 @@ void Device::pause()
 void Device::stop()
 {
     Display("STOPPING SESSION");
-    //quit ui and go back to main menu
+    displayArea->update();
+    QApplication::processEvents();
+
 }
 
 void Device::reset()
 {
     Display("RESETTING");
-    //quit ui and go back to main menu
+
 }
 
 

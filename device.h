@@ -16,13 +16,14 @@
 class BatteryManager;
 class MainMenu;
 class Session;
+class ActiveSessionWindow;
 
 class Device : public QObject
 {
    Q_OBJECT
 public:
 
-   Device(QObject *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* mainM = nullptr,QPlainTextEdit* textEdit = nullptr);
+   Device(QObject *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* mainM = nullptr,QPlainTextEdit* textEdit = nullptr,ActiveSessionWindow* activesesh = nullptr);
 
     ~Device();
 
@@ -44,6 +45,7 @@ private:
 
     MainMenu* mainMenu;
     BatteryManager* batteryManager;
+    ActiveSessionWindow* activeSessionWindow;
     QVector<Sensor*> sensors;
     QVector<Sensor*> sensorQueue;
     std::set<int> disconnectedSensors;

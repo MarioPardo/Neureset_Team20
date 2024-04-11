@@ -33,7 +33,7 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, 
 
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
 
-    device = new Device(nullptr, batteryManager,mainMenu, displayArea);
+    device = new Device(nullptr, batteryManager,mainMenu, displayArea,this);
     device->setLEDLights(greenLED,blueLED,redLED);
 }
 
@@ -66,6 +66,11 @@ void ActiveSessionWindow::updateBatteryBar(int percentage)
 void ActiveSessionWindow::on_stop_Btn_clicked()
 {
     device->stop();
+    QTimer::singleShot(2000, [this]() //so that display is shown for a little before closing
+    {
+        m_instance = nullptr;
+        this->close();
+    });
 }
 
 
