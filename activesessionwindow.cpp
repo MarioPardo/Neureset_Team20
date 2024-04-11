@@ -31,6 +31,7 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, 
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &ActiveSessionWindow::updateBatteryBar);
 
     device = new Device(nullptr, batteryManager,mainMenu, displayArea);
+    device->setLEDLights(greenLED,blueLED,redLED);
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()
