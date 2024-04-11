@@ -3,10 +3,13 @@
 #include "device.h"
 #include "main.cpp"
 #include "mainmenu.h"
+#include <QThread>
 
 #include <QMessageBox>
 #include "waveformwindow.h"
 #include <iostream>
+
+ActiveSessionWindow* ActiveSessionWindow::m_instance = nullptr;
 
 ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, MainMenu* m):
     QMainWindow(parent),
@@ -32,6 +35,15 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, 
 
     device = new Device(nullptr, batteryManager,mainMenu, displayArea);
     device->setLEDLights(greenLED,blueLED,redLED);
+}
+
+ActiveSessionWindow* ActiveSessionWindow::instance(QWidget *parent, BatteryManager* batM, MainMenu* m)
+{
+    if (!m_instance) {
+        m_instance = new ActiveSessionWindow(parent, batM, m);
+        std::cout<<"Creating new Active Session Window" << std::endl;
+    }
+    return m_instance;
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()
@@ -77,7 +89,7 @@ void ActiveSessionWindow::on_powerBtn_clicked()
 
 void ActiveSessionWindow::on_menu_Btn_clicked()
 {
-    std::cout << "GOING BACK TO MAIN MENU" <<std::endl;
+    this->showMinimized();
 }
 
 
