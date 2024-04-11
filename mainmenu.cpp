@@ -19,7 +19,6 @@ MainMenu::MainMenu(QWidget *parent)
     ui->setupUi(this);
 
     batteryBar = findChild<QProgressBar*>("batteryBar");
-
 }
 
 MainMenu::~MainMenu()
@@ -57,11 +56,7 @@ void MainMenu::updateBatteryBar(int percentage)
 
 void MainMenu::on_newsession_Btn_clicked()
 {
-    //open new session UI
-    cout <<endl << "New session opened." << endl ;
-
-    ActiveSessionWindow* sessionWindow = new ActiveSessionWindow(this,batteryManager,this); // Create an instance of SecondWindow
-    sessionWindow->show();
+    ActiveSessionWindow::instance(this,batteryManager,this)->show();
 }
 
 

@@ -23,7 +23,7 @@ class ActiveSessionWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    ActiveSessionWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr,MainMenu* m = nullptr);
+    static ActiveSessionWindow* instance(QWidget *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* m = nullptr);
     ~ActiveSessionWindow();
 
     QFrame* greenLED;
@@ -66,8 +66,11 @@ private slots:
     void handleElectrodeSelected(int index);
 
 private:
-    Ui::ActiveSessionWindow *ui;
 
+    ActiveSessionWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr,MainMenu* m = nullptr);
+
+    static ActiveSessionWindow* m_instance;
+    Ui::ActiveSessionWindow *ui;
     Device* device;
 };
 

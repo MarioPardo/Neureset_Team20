@@ -8,6 +8,8 @@
 #include "waveformwindow.h"
 #include <iostream>
 
+ActiveSessionWindow* ActiveSessionWindow::m_instance = nullptr;
+
 ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, MainMenu* m):
     QMainWindow(parent),
     ui(new Ui::ActiveSessionWindow)
@@ -32,6 +34,15 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, 
 
     device = new Device(nullptr, batteryManager,mainMenu, displayArea);
     device->setLEDLights(greenLED,blueLED,redLED);
+}
+
+ActiveSessionWindow* ActiveSessionWindow::instance(QWidget *parent, BatteryManager* batM, MainMenu* m)
+{
+    if (!m_instance) {
+        m_instance = new ActiveSessionWindow(parent, batM, m);
+        std::cout<<"Creating new Active Session Window" << std::endl;
+    }
+    return m_instance;
 }
 
 ActiveSessionWindow::~ActiveSessionWindow()
