@@ -271,8 +271,11 @@ void Device::pause()
 
 void Device::stop()
 {
+    std::cout<<"STOPPING SESH"<<std::endl;
     Display("STOPPING SESSION");
-    //quit ui and go back to main menu
+    displayArea->update();
+    QApplication::processEvents();
+
 }
 
 void Device::reset()

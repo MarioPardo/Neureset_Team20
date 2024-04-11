@@ -66,6 +66,12 @@ void ActiveSessionWindow::updateBatteryBar(int percentage)
 void ActiveSessionWindow::on_stop_Btn_clicked()
 {
     device->stop();
+    QTimer::singleShot(2000, [this]() //so that display is shown for a little before closing
+    {
+        m_instance = nullptr;
+        delete device;
+        this->close();
+    });
 }
 
 
