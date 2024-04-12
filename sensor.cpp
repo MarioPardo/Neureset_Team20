@@ -61,7 +61,6 @@ float Sensor::generateNewFrequency()
 {
     std::vector<double> ranges = this->getFrequencyRange(this->frequencyType);
     double minFreq = ranges[0];
-    qDebug() << "Original freq before treatment: " << frequency1;
     //[----I-----]  bottom range, from [ to first harmonic frequency (this actually represents target freq. of wave)
     std::uniform_real_distribution<double> dis(minFreq, frequency1);
     double newFreq =dis(*QRandomGenerator::global());

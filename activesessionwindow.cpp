@@ -140,6 +140,5 @@ void ActiveSessionWindow::on_wave_Btn_clicked()
 
 void ActiveSessionWindow::handleElectrodeSelected(int index){
     QVector<QPair<int, float>> sensorData = device->getSensor(index)->generateVoltageGraphData();
-    qDebug() << index;
     emit updateWave(sensorData);
 }

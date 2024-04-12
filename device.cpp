@@ -20,7 +20,7 @@ Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTex
 
 
     for(int i= 0; i < 7; i++) {
-        Sensor* newSensor = new Sensor(i, DESIRED_FREQUENCY_TYPE);
+        Sensor* newSensor = new Sensor(i + 1, DESIRED_FREQUENCY_TYPE);
         sensors.append(newSensor);
     }
 
@@ -144,7 +144,6 @@ void Device::run()
         for(Sensor* s: sensors) {
             //because sensors stay within their ranges and store their current target freq, there's no need to pass in a freq type or sample value
             float newTargetFreq = s->generateNewFrequency();
-            qDebug () << "New frequency after treatment: " << newTargetFreq;
             s->generateFrequenciesAndAmplitudes(newTargetFreq);
             s->generateVoltageGraphData();
             s->CalculateDominantFrequency();
@@ -222,7 +221,7 @@ void Device::SensorDisconnected(int sensor)
     }
 
     std::string toOutput = setToString(disconnectedSensors);
-    Display(" Disconnected Sensors: " + toOutput +  " ");
+    Display("Disconnected Sensors: " + toOutput +  " ");
     flashFrame(redLED, "red");
 }
 
