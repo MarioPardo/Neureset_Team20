@@ -79,8 +79,8 @@ void MainMenu::on_datentime_Btn_clicked()
 
 void MainMenu::on_power_Btn_clicked()
 {
-    //power off device?? either null screen or exit()
     cout << endl << "Power out" << endl;
+    QApplication::quit();
 }
 
 
