@@ -62,6 +62,8 @@ void Device::StartSession()
     runTimer = new QTimer(this);
     connect(runTimer, &QTimer::timeout, this, &Device::run);
     runTimer->start(1500);
+    secondsRemaining = SESSION_LENGTH;
+
 
     state = FIRST_OVERALL;
 }
@@ -79,9 +81,13 @@ void Device::run()
         {
             Display("DEVICE TIMED OUT");
             activeSessionWindow->on_stop_Btn_clicked();
-            return;
         }
+
+        return;
     }
+
+    secondsRemaining--;
+    activeSessionWindow->updateProgress(secondsRemaining);
 
     if(state == FIRST_OVERALL)
     {
@@ -97,6 +103,7 @@ void Device::run()
         state = APPLYING_TREATMENT;
         treatmentRound = 1;
         Display("Starting Treatment");
+
         return;
     }
     else if(state == APPLYING_TREATMENT)
@@ -147,7 +154,6 @@ void Device::run()
 }
 
 
-
 float Device::CalculateBaseline()
 {
     return 5.0f; //rand value for now
@@ -162,6 +168,7 @@ void Device::EndSession()
     Display(" SESSION FINISHED");
     batteryManager->fastDrain(false);
     runTimer->stop();
+    activeSessionWindow->updateProgress(0);
 
     QDateTime dateTime = QDateTime::currentDateTime();
     Session *session = new Session(dateTime,firstBaseline,secondBaseline,0.00);

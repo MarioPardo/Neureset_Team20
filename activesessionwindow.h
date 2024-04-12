@@ -26,6 +26,8 @@ public:
     static ActiveSessionWindow* instance(QWidget *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* m = nullptr);
     ~ActiveSessionWindow();
 
+    void updateProgress(int secondsRemaining);
+
     QFrame* greenLED;
     QFrame* blueLED;
     QFrame* redLED;
