@@ -113,6 +113,7 @@ void ActiveSessionWindow::on_pause_Btn_clicked()
 void ActiveSessionWindow::on_powerBtn_clicked()
 {
     std::cout << "TURNING OFF DEVICE" <<std::endl;
+    on_stop_Btn_clicked();
 }
 
 
