@@ -1,7 +1,7 @@
 #include "mainmenu.h"
 #include "batterymanager.h"
-#include "session.h"
-#include <iostream>
+#include "datetimewindow.h"
+
 #include <QApplication>
 #include <QVector>
 
@@ -16,17 +16,5 @@ int main(int argc, char *argv[])
     batteryManager.startBatterySimulation();
     w.SetBatteryManager(&batteryManager);
 
-    QVector<Session> sessionInfo;
-    QDateTime currentDateTime = QDateTime::currentDateTime();
-    sessionInfo.append(Session(currentDateTime, 1, 2, 3));
-
-    for (int i = 0; i < sessionInfo.size(); ++i) {
-        Session &session = sessionInfo[i];
-        std::cout << "Date and Time: " << session.getDateTime().toString().toStdString()
-                  << " First Baseline: " << session.getFirstBaseline()
-                  << " Second Baseline: " << session.getSecondBaseline()
-                  << " Average Frequency: " << session.getAverageFrequency()
-                  << std::endl;
-    }
     return a.exec();
 }
