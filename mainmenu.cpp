@@ -6,6 +6,8 @@
 #include "batterymanager.h"
 #include <QMessageBox>
 #include "sessionlogwindow.h"
+#include "datetimewindow.h"
+#include <QDateTimeEdit>
 
 
 using namespace std;
@@ -73,6 +75,12 @@ void MainMenu::on_sessionlog_Btn_clicked()
 void MainMenu::on_datentime_Btn_clicked()
 {
     cout << endl <<"Current Date and time: "  <<  endl;
+    datetimewindow* DTW = new datetimewindow();
+    DTW->show();
+
+    //session = new Session(this);
+   // connect(DTW, &datetimewindow::dateTimeChanged, sessions, &Session::updateDateTime);
+   // cout << "Date and Time: " << sessions.getDateTime().toString().toStdString();
 }
 
 

@@ -16,7 +16,8 @@ public:
     float getAverageFrequency();
     QString toString() const; // New toString function declaration
 
-
+public slots:
+    void updateDateTime(const QDateTime &newDateTime);
 
 private:
     QDateTime dateTime;

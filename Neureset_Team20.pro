@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     activesessionwindow.cpp \
     batterymanager.cpp \
+    datetimewindow.cpp \
     main.cpp \
     mainmenu.cpp \
     pcwindow.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     activesessionwindow.h \
     batterymanager.h \
+    datetimewindow.h \
     mainmenu.h \
     pcwindow.h \
     sensor.h \
@@ -38,6 +40,7 @@ HEADERS += \
 
 FORMS += \
     activesessionwindow.ui \
+    datetimewindow.ui \
     mainmenu.ui \
     pcwindow.ui \
     sessionlogwindow.ui \
