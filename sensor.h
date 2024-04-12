@@ -14,13 +14,13 @@ class Sensor
 
 public:
     Sensor(int id, EEGFrequencyType freqType);
-    float ApplyTreatment(float domFreq,int round);
+    void ApplyTreatment(float domFreq,int round);
     float CalculateDominantFrequency();
     void generateFrequenciesAndAmplitudes(float targetFrequency = -1);
     QVector<QPair<int, float>> generateVoltageGraphData();
     std::vector<double> getFrequencyRange(EEGFrequencyType freqType);
     EEGFrequencyType getFrequencyType(float freq);
-    float getRandomOffset(EEGFrequencyType freqType, float val);
+    float generateNewFrequency();
 
 
 private:

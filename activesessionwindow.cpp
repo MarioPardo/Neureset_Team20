@@ -86,7 +86,6 @@ void ActiveSessionWindow::updateProgress(int secondsRemaining)
 }
 
 
-
 void ActiveSessionWindow::on_stop_Btn_clicked()
 {
     device->stop();

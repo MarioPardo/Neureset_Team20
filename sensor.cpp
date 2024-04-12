@@ -8,7 +8,6 @@ Sensor::Sensor(int id, EEGFrequencyType freqType): id(id), frequencyType(freqTyp
     generateFrequenciesAndAmplitudes();
 }
 
-//fill when we know wtf is going on
 float Sensor::CalculateDominantFrequency()
 {
     double amp1Squared = amplitude1 * amplitude1;
@@ -58,41 +57,36 @@ EEGFrequencyType Sensor::getFrequencyType(float freq) {
     }
 }
 
-float Sensor::getRandomOffset(EEGFrequencyType freqType, float val)
+float Sensor::generateNewFrequency()
 {
-    std::vector<double> ranges = getFrequencyRange(freqType);
+    std::vector<double> ranges = this->getFrequencyRange(this->frequencyType);
     double minFreq = ranges[0];
-
-    //[----I-----]  bottom range, from [ to I
-    std::uniform_real_distribution<double> dis(minFreq, val);
-
-    //return random number with frequency lower than the original dominant frequency within its range - since the device helps with focus, it makes sense that it would reduce brain activit
-    return dis(*QRandomGenerator::global());
+    qDebug() << "Original freq before treatment: " << frequency1;
+    //[----I-----]  bottom range, from [ to first harmonic frequency (this actually represents target freq. of wave)
+    std::uniform_real_distribution<double> dis(minFreq, frequency1);
+    double newFreq =dis(*QRandomGenerator::global());
+    frequency1 = newFreq;
+    //return random number with frequency lower than the original dominant frequency within its range - since the device helps with focus, it makes sense that it would reduce brain activity
+    return newFreq;
 
 }
 
-float Sensor::ApplyTreatment(float domFreq, int round)
+void Sensor::ApplyTreatment(float domFreq, int round)
 {
     std::cout<<"Applying treatment to Sensor#" << std::to_string(id) << " with dominant frequency:" <<std::to_string(domFreq) <<std::endl;
 
 
     for(int i = 0; i < 16; i++)
     {
-        int tempFreq = domFreq;
+        float tempFreq = domFreq;
 
         if(i % 2 == 1)
             tempFreq = domFreq + (5*round);
 
-        std::cout<<"    Frequency at " << std::to_string(tempFreq) << "hz" <<std::endl;;
-        QThread::msleep(62);
+        std::cout<<"Sensor " << std::to_string(this->id) + " frequency at " << std::to_string(tempFreq) << "hz" <<std::endl;;
+        //63 milisecond sleep because 1/16th of a second = 62.5 milliseconds but you can't pass floats or doubles into msleep
+        QThread::msleep(63);
     }
-
-
-
-    int randOffset = getRandomOffset(getFrequencyType(domFreq),domFreq); //TODO implement proper random offset
-
-    return domFreq + randOffset;
-
 }
 
 void Sensor::generateFrequenciesAndAmplitudes(float targetFrequency) {
@@ -112,7 +106,6 @@ void Sensor::generateFrequenciesAndAmplitudes(float targetFrequency) {
         //generate frequency within the sensor's range in order to
         std::uniform_real_distribution freq_dist(minFreq, maxFreq);
         targetFrequency = freq_dist(*QRandomGenerator::global());
-
     }
 
 
@@ -141,7 +134,7 @@ void Sensor::generateFrequenciesAndAmplitudes(float targetFrequency) {
    this->amplitude2 = amp_dist(*QRandomGenerator::global());
    this->amplitude3 = amp_dist(*QRandomGenerator::global());
 
-   //create harmonic frequencies for waves based on randomly generated frequency - this makes more sense in the graphdata class, which generates waveform data given these frequencies and amplitudes.
+   //create harmonic frequencies for waves based on randomly generated frequency - this helps generate waveform data given these frequencies and amplitudes.
    this->frequency1 = targetFrequency;
    this->frequency2 = 2 * targetFrequency;
    this->frequency3 = 3 * targetFrequency;

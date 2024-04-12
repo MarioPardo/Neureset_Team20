@@ -2,7 +2,6 @@
 #include <iostream>
 #include <QTimer>
 #include <QApplication>
-#include <QMessageBox>
 
 
 BatteryManager::BatteryManager(QObject *parent) : QObject(parent)

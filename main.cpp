@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     QVector<Session> sessionInfo;
     QDateTime currentDateTime = QDateTime::currentDateTime();
-    sessionInfo.append(Session(currentDateTime, 1, 2, 3));
+    sessionInfo.append(Session(currentDateTime, 0, 0, 0));
 
     for (int i = 0; i < sessionInfo.size(); ++i) {
         Session &session = sessionInfo[i];

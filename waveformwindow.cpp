@@ -17,12 +17,12 @@ WaveformWindow::WaveformWindow(QWidget *parent, BatteryManager* batM)
 }
 
 void WaveformWindow::updateGraph(QVector<QPair<int, float>>& graphData) {
-    qDebug() << graphData.at(2);
     ui->customPlot->graph(0)->data().data()->clear();
     for(QPair<int, float> dataPoint: graphData) {
         int x = dataPoint.first;
         int y = dataPoint.second;
         ui->customPlot->graph(0)->addData(x, y);
+        //call replot here because it makes it graph live and I think that's cool
         ui->customPlot->replot();
     }
 }

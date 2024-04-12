@@ -93,7 +93,7 @@ void Device::run()
     {
         Display("Calculating first Baseline");
         firstBaseline = CalculateBaseline();
-
+        qDebug() << "Initial baseline: " << std::to_string(firstBaseline);
         //finished calculating baseline, now prep for next step
         sensorQueue.clear();
         for(Sensor* s : sensors)
@@ -124,7 +124,7 @@ void Device::run()
             for(Sensor* s : sensors)
                 sensorQueue.append(s);
 
-            treatmentRound ++;
+            treatmentRound++;
 
             return;
         }
@@ -141,9 +141,17 @@ void Device::run()
     }
     else if(state == SECOND_OVERALL)
     {
-        Display("Calculating Second Baseline Baseline");
+        for(Sensor* s: sensors) {
+            //because sensors stay within their ranges and store their current target freq, there's no need to pass in a freq type or sample value
+            float newTargetFreq = s->generateNewFrequency();
+            qDebug () << "New frequency after treatment: " << newTargetFreq;
+            s->generateFrequenciesAndAmplitudes(newTargetFreq);
+            s->generateVoltageGraphData();
+            s->CalculateDominantFrequency();
+        }
+        Display("Calculating Second Baseline");
         secondBaseline = CalculateBaseline();
-
+        qDebug () << "New baseline frequency: " << secondBaseline;
         EndSession();
 
 
@@ -156,7 +164,11 @@ void Device::run()
 
 float Device::CalculateBaseline()
 {
-    return 5.0f; //rand value for now
+    float totalDomFreq = 0.0;
+    for(Sensor* s: sensors) {
+        totalDomFreq += s->CalculateDominantFrequency();
+    }
+    return totalDomFreq / NUM_SENSORS;
 }
 
 void Device::EndSession()

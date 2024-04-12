@@ -25,5 +25,7 @@ enum EEGFrequencyType {
 
 #define SESSION_LENGTH 35
 
+#define NUM_SENSORS 7
+
 #endif
 
