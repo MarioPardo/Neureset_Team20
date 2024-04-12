@@ -3,6 +3,7 @@
 #include "device.h"
 #include "main.cpp"
 #include "mainmenu.h"
+
 #include <QThread>
 
 #include <QMessageBox>
@@ -86,7 +87,7 @@ void ActiveSessionWindow::on_pause_Btn_clicked()
 }
 
 
-void ActiveSessionWindow::on_powerBtn_clicked()
+void ActiveSessionWindow::on_power_Btn_clicked()
 {
     std::cout << "TURNING OFF DEVICE" <<std::endl;
 }

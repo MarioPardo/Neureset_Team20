@@ -57,7 +57,7 @@ private slots:
 
     void on_pause_Btn_clicked();
 
-    void on_powerBtn_clicked();
+    void on_power_Btn_clicked();
 
     void on_menu_Btn_clicked();
 

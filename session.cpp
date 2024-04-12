@@ -1,5 +1,5 @@
 #include "session.h"
-
+#include <iostream>
 #include <QDateTime>
 
 Session::Session(QDateTime date, float fb, float sb, float avg)
@@ -32,4 +32,11 @@ float Session::getAverageFrequency()
 
 QString Session::toString() const {
     return dateTime.toString();
+}
+
+void Session::updateDateTime(const QDateTime &newDateTime)
+{
+    dateTime = newDateTime;
+    std::cout << "CURRENT DATETIME: " << dateTime.toString("yyyy-MM-dd hh:mm:ss").toStdString() << std::endl;
+    //std::cout << dateTime.toString() << std::endl;
 }
