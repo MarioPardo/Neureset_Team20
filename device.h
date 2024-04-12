@@ -12,6 +12,8 @@
 #include <sstream>
 #include "sensor.h"
 #include <QPlainTextEdit>
+#include <QProgressBar>
+#include <QLabel>
 
 class BatteryManager;
 class MainMenu;
@@ -56,6 +58,7 @@ private:
     QTime pausedTime;
     int numRounds = 4;
     int pauseTimeout = 7000;
+    int secondsRemaining;
 
     QTimer* runTimer;
     QPlainTextEdit* displayArea;
@@ -65,7 +68,7 @@ private:
     QFrame* redLED;
 
     void flashFrame(QFrame* frame, std::string color);
-
+    void updateProgress();
 
     float firstBaseline = NULL;
     float secondBaseline = NULL;

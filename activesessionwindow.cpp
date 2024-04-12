@@ -35,6 +35,7 @@ ActiveSessionWindow::ActiveSessionWindow(QWidget *parent, BatteryManager* batM, 
 
     device = new Device(nullptr, batteryManager,mainMenu, displayArea,this);
     device->setLEDLights(greenLED,blueLED,redLED);
+
 }
 
 ActiveSessionWindow* ActiveSessionWindow::instance(QWidget *parent, BatteryManager* batM, MainMenu* m)
@@ -62,6 +63,29 @@ void ActiveSessionWindow::updateBatteryBar(int percentage)
     }
 
 }
+
+void ActiveSessionWindow::updateProgress(int secondsRemaining)
+{
+    int percent;
+
+    if (secondsRemaining <= 0)
+        percent = 0;
+    else
+        percent = (secondsRemaining * 100) / SESSION_LENGTH;
+
+    std::string timeString;
+    if (secondsRemaining < 10)
+        timeString = "00:0" + std::to_string(secondsRemaining);
+    else
+        timeString = "00:" + std::to_string(secondsRemaining);
+
+
+
+    timeRemainingLabel->setText(QString::fromStdString(timeString));
+    ui->sessionProgressBar->setValue(percent);
+}
+
+
 
 void ActiveSessionWindow::on_stop_Btn_clicked()
 {
