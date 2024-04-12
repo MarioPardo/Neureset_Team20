@@ -174,6 +174,8 @@ void Device::EndSession()
     Session *session = new Session(dateTime,firstBaseline,secondBaseline,0.00);
     mainMenu->addSession(session);
 
+    reset();
+
 }
 
 
@@ -244,6 +246,8 @@ void Device::Display(std::string str)
 {
     displayArea->clear();
     displayArea->setPlainText(QString::fromStdString(str));
+    displayArea->update();
+    QApplication::processEvents();
 }
 
 
@@ -264,6 +268,7 @@ void Device::pause()
         Display("DEVICE UNPAUSED, RESUMING");
         batteryManager->fastDrain(true);
         state = prevState;
+        pausedTime = QTime();
     }
     else
     {
@@ -287,7 +292,16 @@ void Device::stop()
 
 void Device::reset()
 {
-    Display("RESETTING");
+
+    treatmentRound = NULL;
+    state = READY;
+    prevState = state;
+    firstBaseline = NULL;
+    secondBaseline = NULL;
+
+    Display("READY FOR NEW SESSION");
+
+
 
 }
 
