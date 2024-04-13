@@ -29,8 +29,9 @@ This is our submission for the COMP3004's final project, Neureset.
 **Mario**:
 - Set up and managed GitHub repository and project
 - Delegated tickets as scrum master
-- Implemented session windo including starting, pausing, stopping, and sensor connection/disconenction including logic and UI
-- Implement device battery system
+- Implemented session window including starting, pausing, stopping, and sensor connection/disconenction including logic and UI
+- Implemented device battery system including fully drained battery safety scenario
+- Helped implement treatment
 - General project planning and work coordination
 
 **Jai**:
