@@ -23,7 +23,7 @@ enum EEGFrequencyType {
 #define DRAIN_RATE_FAST 2
 #define DRAIN_RATE_SLOW  1
 
-#define SESSION_LENGTH 38
+#define SESSION_LENGTH 36
 
 #define NUM_SENSORS 7
 

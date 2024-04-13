@@ -52,7 +52,7 @@
     <rect>
      <x>359</x>
      <y>52</y>
-     <width>91</width>
+     <width>121</width>
      <height>31</height>
     </rect>
    </property>
@@ -87,6 +87,7 @@
    </property>
    <property name="font">
     <font>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>

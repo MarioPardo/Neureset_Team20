@@ -65,7 +65,7 @@ void MainMenu::on_newsession_Btn_clicked()
 void MainMenu::on_sessionlog_Btn_clicked()
 {
     cout << endl << "Session log opened." <<  endl;
-    SessionLogWindow* SLW = new SessionLogWindow(this,batteryManager, sessions,this); // Create an instance of SecondWindow
+    SessionLogWindow* SLW = new SessionLogWindow(this,batteryManager,this); // Create an instance of SecondWindow
 
     SLW->show();
 
@@ -91,11 +91,6 @@ void MainMenu::on_power_Btn_clicked()
     QApplication::quit();
 }
 
-
-void MainMenu::on_batteryBar_valueChanged(int value)
-{
-
-}
 
 vector<Session*> MainMenu::getSessions() const {
     return sessions;

@@ -19,7 +19,7 @@ class SessionLogWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit SessionLogWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr, std::vector <Session*> v = std::vector<Session*>(), MainMenu* m = nullptr
+    explicit SessionLogWindow(QWidget *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* m = nullptr
                               );
     ~SessionLogWindow();
     MainMenu* mainMenu;

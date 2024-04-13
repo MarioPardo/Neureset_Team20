@@ -51,7 +51,7 @@ private:
     QVector<Sensor*> sensors;
     QVector<Sensor*> sensorQueue;
     std::set<int> disconnectedSensors;
-    int treatmentRound = NULL;
+    int treatmentRound = -1;
     int powerPercentage = 100;
     DEVICE_STATE state = READY;
     DEVICE_STATE prevState = state;
@@ -70,8 +70,8 @@ private:
     void flashFrame(QFrame* frame, std::string color);
     void updateProgress();
 
-    float firstBaseline = NULL;
-    float secondBaseline = NULL;
+    float firstBaseline = -1;
+    float secondBaseline = -1;
 
     float CalculateBaseline();
     float calcDomFreq();
@@ -79,6 +79,8 @@ private:
     std::string setToString(const std::set<int>& mySet);
 
     void EndSession();
+
+    //change this to get different frequency bands
     EEGFrequencyType DESIRED_FREQUENCY_TYPE = DELTA;
 };
 

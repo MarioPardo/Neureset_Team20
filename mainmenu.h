@@ -38,8 +38,6 @@ private slots:
 
     void on_datentime_Btn_clicked();
 
-    void on_batteryBar_valueChanged(int value);
-
     void on_power_Btn_clicked();
 
     void updateBatteryBar(int percentage);

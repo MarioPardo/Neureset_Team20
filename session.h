@@ -3,10 +3,11 @@
 
 #include <QDateTime>
 #include <QString>
-
+#include <QObject>
 
 class Session
 {
+
 public:
     Session(QDateTime date, float fb, float sb, float avg);
 

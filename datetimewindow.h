@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QDateTime>
 #include <QDateTimeEdit>
+#include <QDebug>
 
 namespace Ui {
 class datetimewindow;

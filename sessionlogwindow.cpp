@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QString>
 
-SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM, std::vector <Session*> vec,MainMenu* m) :
+SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM,MainMenu* m) :
     QMainWindow(parent),
     ui(new Ui::SessionLogWindow)
 {

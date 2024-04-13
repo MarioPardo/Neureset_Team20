@@ -8,6 +8,7 @@
 #include <QPair>
 #include "defs.h"
 #include <QtMath>
+#include <QObject>
 
 class Sensor
 {

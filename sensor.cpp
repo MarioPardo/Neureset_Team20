@@ -1,5 +1,4 @@
 #include "sensor.h"
-
 #include <iostream>
 #include <QThread>
 #include <random>

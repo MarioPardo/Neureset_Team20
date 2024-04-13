@@ -93,7 +93,7 @@ void Device::run()
     {
         Display("Calculating first Baseline");
         firstBaseline = CalculateBaseline();
-        qDebug() << "Initial baseline: " << std::to_string(firstBaseline);
+        qDebug() << "Initial baseline: " << QString::number(firstBaseline);
         //finished calculating baseline, now prep for next step
         sensorQueue.clear();
         for(Sensor* s : sensors)
@@ -304,11 +304,11 @@ void Device::stop()
 void Device::reset()
 {
 
-    treatmentRound = NULL;
+    treatmentRound = -1;
     state = READY;
     prevState = state;
-    firstBaseline = NULL;
-    secondBaseline = NULL;
+    firstBaseline = -1;
+    secondBaseline = -1;
 
     Display("READY FOR NEW SESSION");
 
