@@ -19,11 +19,10 @@ SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM,MainMen
     mainMenu = m;
     //get sessions
 
-
-    checkoutSessions = m->getSessions();
+    allSessions = m->getSessions();
 
     /*delete aft*/
-    for (Session* session : checkoutSessions) {
+    for (Session* session : allSessions) {
         QString sessionString = session->toString(); // Assuming toString() returns session details
         cout << "Session string: " << endl << sessionString.toStdString() ;
     }
@@ -31,7 +30,6 @@ SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM,MainMen
 
     connect(batteryManager, &BatteryManager::batteryPercentageChanged, this, &SessionLogWindow::updateBatteryBar);
 
-    //connect(mainMenu, &MainMenu::sessionAddedSignal, this, &SessionLogWindow::onSessionAdded);
     updateSessionLog();
 
 }
@@ -57,27 +55,44 @@ void SessionLogWindow::updateBatteryBar(int percentage)
 
 void SessionLogWindow::updateSessionLog()
 {
+    allSessions = mainMenu->getSessions();
+    PopulateListView(ui->listView_2, allSessions);
+}
 
-    checkoutSessions = mainMenu->getSessions();
-
+void SessionLogWindow::PopulateListView(QListView* view, std::vector<Session*> sessions)
+{
 
     QStandardItemModel *model = new QStandardItemModel();
 
     // Populate the model with session details
-    for (Session* session : checkoutSessions) {
+    for (Session* session : sessions) {
         QString sessionString = session->toString(); // Assuming toString() returns session details
-        cout << "Session string: " << endl << sessionString.toStdString() ;
         QStandardItem *listItem = new QStandardItem(sessionString);
         model->appendRow(listItem);
     }
 
     // Set the model for listView_2
-    ui->listView_2->setModel(model);
+    view->setModel(model); //I want the use the view that is passed in
 }
 
 void SessionLogWindow::on_pushButton_clicked()
 {
     updateSessionLog();
 
+}
+
+
+
+
+void SessionLogWindow::on_addCart_clicked()
+{
+    int row =  ui->listView_2->selectionModel()->selectedIndexes().first().row();
+    std::cout<<"Index:" + std::to_string(row) << std::endl;;
+    Session* sesh = allSessions.at(row);
+
+    //TODO make sure this session isnt already in the vector
+    sessionsForPC.push_back(sesh);
+
+    PopulateListView(ui->listView,sessionsForPC);
 }
 
