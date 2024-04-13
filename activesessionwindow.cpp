@@ -70,9 +70,9 @@ void ActiveSessionWindow::updateProgress(int secondsRemaining)
     int percent;
 
     if (secondsRemaining <= 0)
-        percent = 0;
+        percent = 100;
     else
-        percent = (secondsRemaining * 100) / SESSION_LENGTH;
+        percent = ((SESSION_LENGTH - secondsRemaining) * 100 / SESSION_LENGTH);
 
     std::string timeString;
     if (secondsRemaining < 10)
