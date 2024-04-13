@@ -83,3 +83,16 @@ void SessionLogWindow::on_pushButton_clicked()
 
 
 
+
+void SessionLogWindow::on_addCart_clicked()
+{
+    int row =  ui->listView_2->selectionModel()->selectedIndexes().first().row();
+    std::cout<<"Index:" + std::to_string(row) << std::endl;;
+    Session* sesh = allSessions.at(row);
+
+    //TODO make sure this session isnt already in the vector
+    sessionsForPC.push_back(sesh);
+
+    PopulateListView(ui->listView,sessionsForPC);
+}
+

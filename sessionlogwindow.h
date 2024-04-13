@@ -33,6 +33,8 @@ private slots:
     void updateBatteryBar(int percentage);    
     void on_pushButton_clicked();
 
+    void on_addCart_clicked();
+
 private:
     Ui::SessionLogWindow *ui;
     BatteryManager* batteryManager;
