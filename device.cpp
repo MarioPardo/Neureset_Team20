@@ -94,6 +94,7 @@ void Device::run()
         Display("Calculating first Baseline");
         firstBaseline = CalculateBaseline();
         qDebug() << "Initial baseline: " << QString::number(firstBaseline);
+
         //finished calculating baseline, now prep for next step
         sensorQueue.clear();
         for(Sensor* s : sensors)
@@ -108,6 +109,8 @@ void Device::run()
     }
     else if(state == APPLYING_TREATMENT)
     {
+        Display("Treatment Round: " + std::to_string(treatmentRound));
+
         if(sensorQueue.isEmpty())
         {
             Display("Finished round #: " + std::to_string(treatmentRound) + "!" );
@@ -141,20 +144,21 @@ void Device::run()
     }
     else if(state == SECOND_OVERALL)
     {
-        for(Sensor* s: sensors) {
+        for(Sensor* s: sensors)
+        {
+
             //because sensors stay within their ranges and store their current target freq, there's no need to pass in a freq type or sample value
             float newTargetFreq = s->generateNewFrequency();
             s->generateFrequenciesAndAmplitudes(newTargetFreq);
             s->generateVoltageGraphData();
             s->CalculateDominantFrequency();
         }
+
         Display("Calculating Second Baseline");
         secondBaseline = CalculateBaseline();
         qDebug () << "New baseline frequency: " << secondBaseline;
         EndSession();
 
-
-        state = READY;
         return;
     }
 
@@ -172,10 +176,6 @@ float Device::CalculateBaseline()
 
 void Device::EndSession()
 {
-    if(mainMenu == nullptr)
-    {
-        cout << "null";
-    }
     Display(" SESSION FINISHED");
     batteryManager->fastDrain(false);
     runTimer->stop();
@@ -309,6 +309,7 @@ void Device::reset()
     prevState = state;
     firstBaseline = -1;
     secondBaseline = -1;
+    blueLED->setStyleSheet("background-color: lightgrey;");
 
     Display("READY FOR NEW SESSION");
 
