@@ -5,6 +5,7 @@
 #include <QProgressBar>
 #include <QObject>
 #include <vector>
+#include <QListView>
 
 class MainMenu;
 class BatteryManager;
@@ -36,7 +37,12 @@ private:
     Ui::SessionLogWindow *ui;
     BatteryManager* batteryManager;
     QProgressBar* batteryBar;
-    std::vector<Session*> checkoutSessions;
+    QListView* allSessionsView;
+
+    std::vector<Session*> allSessions;
+    std::vector<Session*> sessionsForPC;
+
+    void PopulateListView(QListView* view, std::vector<Session*> sessions);
 
 
 };
