@@ -44,7 +44,7 @@ This is our submission for the COMP3004's final project, Neureset.
 
 
 
-### Project organization
+## Project organization
 
 /Documentation/ - Folder for UML sequence, class, and state diagrams + traceability matrix
 
