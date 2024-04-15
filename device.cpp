@@ -174,11 +174,6 @@ float Device::CalculateBaseline()
     return totalDomFreq / NUM_SENSORS;
 }
 
-//void handleDateTimeValueChanged(const QDateTime &dateTime) {
-//    dateTimeValue = dateTime;
-//    cout << "Selected Date and Time: " << dateTimeValue.toString("yyyy-MM-dd hh:mm:ss").toStdString() << endl;
-//}
-
 void Device::EndSession()
 {
     if(mainMenu == nullptr)
@@ -190,13 +185,8 @@ void Device::EndSession()
     runTimer->stop();
     activeSessionWindow->updateProgress(0);
 
-   // QDateTime dateTime = QDateTime::currentDateTime();
-    //QDateTime dateTime = dtw->getDateTimeValue();
-    //QDateTime dateTime = selectedDateTime;
     QDateTime dateTime = mainMenu->getSelectedDateTime();
     cout << "Selected Date and Time: " << dateTime.toString("yyyy-MM-dd hh:mm:ss").toStdString() << endl;
-
-    //connect(dtw, &datetimewindow::dateTimeValueChanged, this, &Device::handleDateTimeValueChanged);
 
     Session *session = new Session(dateTime,firstBaseline,secondBaseline,0.00);
     mainMenu->addSession(session);
