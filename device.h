@@ -45,8 +45,6 @@ public:
 
 public slots:
     void run();
-    //void handleDateTimeValueChanged(const QDateTime &dateTime);
-    //void EndSession();
 
 
 private:
