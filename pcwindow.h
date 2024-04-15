@@ -2,6 +2,9 @@
 #define PCWINDOW_H
 
 #include <QMainWindow>
+#include <vector>
+
+class Session;
 
 namespace Ui {
 class PCWindow;
@@ -19,8 +22,9 @@ private:
     Ui::PCWindow *ui;
 
     void parseSessions();
+    std::vector<Session*> allSessions;
 
-    void readAllAndPrintJson();
+    void populateSessionsView();
 };
 
 #endif // PCWINDOW_H

@@ -5,6 +5,10 @@
 #include <QDebug>
 #include <QTextStream>
 #include <iostream>
+#include <QJsonArray>
+#include <QJsonObject>
+#include "session.h"
+#include <QStandardItemModel>
 
 PCWindow::PCWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,7 +16,11 @@ PCWindow::PCWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    readAllAndPrintJson();
+    parseSessions();
+
+    populateSessionsView();
+
+
 }
 
 PCWindow::~PCWindow()
@@ -22,14 +30,7 @@ PCWindow::~PCWindow()
 
 void PCWindow::parseSessions()
 {
-
-}
-
-
-
-void PCWindow::readAllAndPrintJson()
-{
-    std::cout << "Reading session log" << std::endl;
+    std::cout << "Parsing session log" << std::endl;
 
     // Open the file for reading
     QString filePath = QCoreApplication::applicationDirPath() + "/session-log.json";
@@ -60,10 +61,39 @@ void PCWindow::readAllAndPrintJson()
         return;
     }
 
-    // Convert the JSON array to a nicely formatted JSON string
-    QByteArray formattedJsonData = jsonDoc.toJson(QJsonDocument::Indented);
+    // Iterate over each session object in the array
+    QJsonArray jsonArray = jsonDoc.array();
+    for (const QJsonValue& sessionValue : jsonArray)
+    {
+        // Extract session data from JSON object
+        QJsonObject sessionObject = sessionValue.toObject();
+        QDateTime dateTime = QDateTime::fromString(sessionObject["DateTime"].toString(), Qt::ISODate);
+        float firstBaseline = sessionObject["firstBaseline"].toDouble();
+        float secondBaseline = sessionObject["secondBaseline"].toDouble();
 
-    // Output the formatted JSON data to std::cout
-    QTextStream(stdout) << formattedJsonData << endl;
+        // Create a new Session object and add it to allSessions list
+        Session* session = new Session(dateTime, firstBaseline, secondBaseline);
+
+        std::cout<<session->toString().toStdString() <<std::endl;
+        allSessions.push_back(session);
+    }
+
+    std::cout << "Sessions parsed successfully." << std::endl;
+}
+
+void PCWindow::populateSessionsView()
+{
+    QStandardItemModel *model = new QStandardItemModel();
+
+    // Populate the model with session details
+    for (Session* session : allSessions) {
+        QString sessionString = session->toString();
+        std::cout<<"Populating: " << sessionString.toStdString() <<std::endl;
+        QStandardItem *listItem = new QStandardItem(sessionString);
+        model->appendRow(listItem);
+    }
+
+    ui->listView->setModel(model);
+
 
 }
