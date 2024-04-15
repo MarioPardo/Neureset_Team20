@@ -88,12 +88,10 @@ void PCWindow::populateSessionsView()
     // Populate the model with session details
     for (Session* session : allSessions) {
         QString sessionString = session->toString();
-        std::cout<<"Populating: " << sessionString.toStdString() <<std::endl;
-        QStandardItem *listItem = new QStandardItem(sessionString);
+        QStandardItem *listItem = new QStandardItem(" ------ \n " + sessionString );
         model->appendRow(listItem);
     }
 
     ui->listView->setModel(model);
-
 
 }

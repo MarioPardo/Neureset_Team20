@@ -70,7 +70,7 @@ void SessionLogWindow::PopulateListView(QListView* view, std::vector<Session*> s
 
     // Populate the model with session details
     for (Session* session : sessions) {
-        QString sessionString = session->toString(); // Assuming toString() returns session details
+        QString sessionString = session->getDateTime().toString(); // Assuming toString() returns session details
         QStandardItem *listItem = new QStandardItem(sessionString);
         model->appendRow(listItem);
     }
