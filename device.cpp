@@ -185,7 +185,7 @@ void Device::EndSession()
     Session *session = new Session(dateTime,firstBaseline,secondBaseline,0.00);
 
     //save session to permanent storoage here
-    mainMenu->saveSession(session);
+    mainMenu->addSession(session);
 
     reset();
 

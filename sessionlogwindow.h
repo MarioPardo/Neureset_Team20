@@ -48,6 +48,7 @@ private:
 
     void PopulateListView(QListView* view, std::vector<Session*> sessions);
 
+    void saveSession(Session* session);
 
 };
 

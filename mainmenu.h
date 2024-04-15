@@ -25,7 +25,7 @@ class MainMenu : public QMainWindow
 public:
     MainMenu(QWidget *parent = nullptr);
     ~MainMenu();
-    void saveSession(Session*);
+    void addSession(Session*);
 
     void SetBatteryManager(BatteryManager* batM);
     vector<Session*> getSessions() const;
@@ -48,6 +48,8 @@ private:
     vector<Session*> sessions;
     BatteryManager* batteryManager;
     QProgressBar* batteryBar;
+
+    void readAllAndPrintJson();
 
 
 };

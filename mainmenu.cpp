@@ -8,12 +8,7 @@
 #include "sessionlogwindow.h"
 #include "datetimewindow.h"
 #include <QDateTimeEdit>
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
-#include "session.h"
-#include <QString>
+
 
 using namespace std;
 
@@ -34,49 +29,11 @@ MainMenu::~MainMenu()
 }
 
 
-void MainMenu::saveSession(Session* session)
+void MainMenu::addSession(Session* session)
 {
-    std::cout << "Saving session" << std::endl;
-
-    QJsonObject sessionObject;
-    sessionObject["DateTime"] = session->getDateTime().toString(Qt::ISODate);
-    sessionObject["firstBaseline"] = session->getFirstBaseline();
-    sessionObject["secondBaseline"] = session->getSecondBaseline();
-    sessionObject["Average"] = session->getAverageFrequency();
-
-    QJsonDocument jsonDoc(sessionObject);
-
-    QString filePath = QCoreApplication::applicationDirPath() + "/session-log.json";
-    std::cout << "Saving to : " << filePath.toStdString() << std::endl;
-
-    // Check if the file exists, create it if it doesn't
-    QFile file(filePath);
-    if (!file.exists()) {
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            std::cout << "Failed to create file" << std::endl;
-            return;
-        }
-        file.close(); // Close the file after creating it
-    }
-
-    // Open the file for appending
-    if (!file.open(QIODevice::Append | QIODevice::Text))
-    {
-        std::cout << "Failed opening file" << std::endl;
-        return;
-    }
-
-    if (file.size() != 0) {
-        file.write(","); // Add a comma to separate JSON objects
-    }
-
-    qint64 numBytes = file.write(jsonDoc.toJson());
-    if (numBytes == -1)
-    {
-        std::cout << "Failed writing to file" << std::endl;
-    }
-
-    file.close();
+    sessions.push_back(session); // Store pointer to Device object in log
+    std::cout << "Session added" << std::endl;
+    //update array in sessionlog?
 }
 
 
