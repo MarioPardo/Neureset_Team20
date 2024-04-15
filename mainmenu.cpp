@@ -46,12 +46,20 @@ void MainMenu::saveSession(Session* session)
 
     QJsonDocument jsonDoc(sessionObject);
 
-    QString basePath = QCoreApplication::applicationDirPath();
-    QString filePath = basePath + "/../Resources/session-log.json";
+    QString filePath = QCoreApplication::applicationDirPath() + "/session-log.json";
     std::cout << "Saving to : " << filePath.toStdString() << std::endl;
 
-
+    // Check if the file exists, create it if it doesn't
     QFile file(filePath);
+    if (!file.exists()) {
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            std::cout << "Failed to create file" << std::endl;
+            return;
+        }
+        file.close(); // Close the file after creating it
+    }
+
+    // Open the file for appending
     if (!file.open(QIODevice::Append | QIODevice::Text))
     {
         std::cout << "Failed opening file" << std::endl;
@@ -70,7 +78,6 @@ void MainMenu::saveSession(Session* session)
 
     file.close();
 }
-
 
 
 void MainMenu::SetBatteryManager(BatteryManager* batM)

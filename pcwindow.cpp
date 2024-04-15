@@ -28,7 +28,7 @@ void PCWindow::readSessions()
 
 void PCWindow::readAllAndPrintJson( )
 {
-    QString filePath = QCoreApplication::applicationDirPath() + "/../Resources/session-log.json";
+    QString filePath = QCoreApplication::applicationDirPath() + "/session-log.json";
     std::cout<<"Reading from : "<<  filePath.toStdString() << std::endl;
 
     // Open the JSON file for reading
