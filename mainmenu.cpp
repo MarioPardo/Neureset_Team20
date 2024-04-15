@@ -100,10 +100,11 @@ void MainMenu::handleDateTimeValueChanged(const QDateTime &dateTime) {
 }
 
 QDateTime MainMenu::getSelectedDateTime() const {
-    //return selectedDateTime;
+    // Returns the selected date and time if the user selects a date and time in the settings
+    // Else, returns current date
     if (selectedDateTime.isValid()) {
-        return selectedDateTime; // Return selected date and time if valid
+        return selectedDateTime; 
     } else {
-        return QDateTime::currentDateTime(); // Return current date and time as fallback
+        return QDateTime::currentDateTime(); 
     }
 }
