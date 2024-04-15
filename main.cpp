@@ -14,6 +14,6 @@ int main(int argc, char *argv[])
 
     BatteryManager batteryManager;
     batteryManager.startBatterySimulation();
-    w.SetBatteryManager(&batteryManager);
+    w.SetBatteryManager(&batteryManager); 
     return a.exec();
 }

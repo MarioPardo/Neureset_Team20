@@ -5,10 +5,12 @@
 #include "batterymanager.h"
 #include <sstream>
 #include "mainmenu.h"
+#include "datetimewindow.h"
 #include "session.h"
 
 
-Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTextEdit* textEdit, ActiveSessionWindow* activesesh) : QObject(parent)
+Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTextEdit* textEdit, ActiveSessionWindow* activesesh, QDateTime selectedDateTime) : QObject(parent)
+
 {
     std::cout << "Device Constructor" << std::endl;
 
@@ -17,7 +19,7 @@ Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTex
     displayArea = textEdit;
     activeSessionWindow = activesesh;
 
-
+    dtw = new datetimewindow;
 
     for(int i= 0; i < 7; i++) {
         Sensor* newSensor = new Sensor(i + 1, DESIRED_FREQUENCY_TYPE);
@@ -47,6 +49,8 @@ void Device::setLEDLights(QFrame* green, QFrame* blue, QFrame* red)
 
 void Device::StartSession()
 {
+    //dtw = new datetimewindow;
+
     if(state == PAUSED)
     {
         pause(); //will handle unpausing
@@ -170,6 +174,11 @@ float Device::CalculateBaseline()
     return totalDomFreq / NUM_SENSORS;
 }
 
+//void handleDateTimeValueChanged(const QDateTime &dateTime) {
+//    dateTimeValue = dateTime;
+//    cout << "Selected Date and Time: " << dateTimeValue.toString("yyyy-MM-dd hh:mm:ss").toStdString() << endl;
+//}
+
 void Device::EndSession()
 {
     if(mainMenu == nullptr)
@@ -181,12 +190,18 @@ void Device::EndSession()
     runTimer->stop();
     activeSessionWindow->updateProgress(0);
 
-    QDateTime dateTime = QDateTime::currentDateTime();
+   // QDateTime dateTime = QDateTime::currentDateTime();
+    //QDateTime dateTime = dtw->getDateTimeValue();
+    //QDateTime dateTime = selectedDateTime;
+    QDateTime dateTime = mainMenu->getSelectedDateTime();
+    cout << "Selected Date and Time: " << dateTime.toString("yyyy-MM-dd hh:mm:ss").toStdString() << endl;
+
+    //connect(dtw, &datetimewindow::dateTimeValueChanged, this, &Device::handleDateTimeValueChanged);
+
     Session *session = new Session(dateTime,firstBaseline,secondBaseline,0.00);
     mainMenu->addSession(session);
 
     reset();
-
 }
 
 
