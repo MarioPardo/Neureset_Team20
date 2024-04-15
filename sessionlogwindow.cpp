@@ -7,6 +7,7 @@
 #include <QStandardItemModel> // Include the necessary header for QStandardItemModel
 #include <QMessageBox>
 #include <QString>
+#include "pcwindow.h"
 
 SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM,MainMenu* m) :
     QMainWindow(parent),
@@ -94,5 +95,15 @@ void SessionLogWindow::on_addCart_clicked()
     sessionsForPC.push_back(sesh);
 
     PopulateListView(ui->listView,sessionsForPC);
+}
+
+
+void SessionLogWindow::on_sendAll_clicked()
+{
+    //Open PC
+    PCWindow* pcWindow = new PCWindow(this);
+
+    pcWindow->show();
+
 }
 

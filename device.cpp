@@ -183,7 +183,9 @@ void Device::EndSession()
 
     QDateTime dateTime = QDateTime::currentDateTime();
     Session *session = new Session(dateTime,firstBaseline,secondBaseline,0.00);
-    mainMenu->addSession(session);
+
+    //save session to permanent storoage here
+    mainMenu->saveSession(session);
 
     reset();
 

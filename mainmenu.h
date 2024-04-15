@@ -25,7 +25,7 @@ class MainMenu : public QMainWindow
 public:
     MainMenu(QWidget *parent = nullptr);
     ~MainMenu();
-    void addSession(Session*);
+    void saveSession(Session*);
 
     void SetBatteryManager(BatteryManager* batM);
     vector<Session*> getSessions() const;

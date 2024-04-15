@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::PCWindow *ui;
+
+    void readSessions();
+
+    void readAllAndPrintJson();
 };
 
 #endif // PCWINDOW_H

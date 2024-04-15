@@ -35,6 +35,8 @@ private slots:
 
     void on_addCart_clicked();
 
+    void on_sendAll_clicked();
+
 private:
     Ui::SessionLogWindow *ui;
     BatteryManager* batteryManager;
