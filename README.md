@@ -31,6 +31,7 @@ This is our submission for the COMP3004's final project, Neureset.
 - Created, Delegated tickets as scrum master
 - Implemented session window including the logic required for stating starting, pausing, stopping, and sensor connection/disconenction including logic, and the UI
 - Implemented device battery system including fully drained battery safety scenario
+- Implemented permanent storage for session information and populating the PC UI
 - Helped implement treatment
 - General project planning and  decision making,  and ensured smooth work coordination
 
