@@ -86,8 +86,6 @@ void SessionLogWindow::on_pushButton_clicked()
 }
 
 
-
-
 void SessionLogWindow::on_addCart_clicked()
 {
     int row =  ui->listView_2->selectionModel()->selectedIndexes().first().row();
@@ -96,7 +94,6 @@ void SessionLogWindow::on_addCart_clicked()
 
     //TODO make sure this session isnt already in the vector
     sessionsForPC.push_back(sesh);
-    saveSession(sesh);
 
     PopulateListView(ui->listView,sessionsForPC);
 }
@@ -116,7 +113,6 @@ void SessionLogWindow::saveSession(Session* session)
     sessionObject["DateTime"] = dateTimeString;
     sessionObject["firstBaseline"] = session->getFirstBaseline();
     sessionObject["secondBaseline"] = session->getSecondBaseline();
-    sessionObject["Average"] = session->getAverageFrequency();
 
     // Create a JSON array if it doesn't exist in the file
     QJsonArray jsonArray;
@@ -164,6 +160,11 @@ void SessionLogWindow::saveSession(Session* session)
 
 void SessionLogWindow::on_sendAll_clicked()
 {
+    for(Session* sesh : sessionsForPC)
+    {
+        saveSession(sesh);
+    }
+
     //Open PC
     PCWindow* pcWindow = new PCWindow(this);
 

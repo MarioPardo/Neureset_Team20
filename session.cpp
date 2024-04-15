@@ -2,12 +2,11 @@
 #include <iostream>
 #include <QDateTime>
 
-Session::Session(QDateTime date, float fb, float sb, float avg)
+Session::Session(QDateTime date, float fb, float sb)
 {
     dateTime = date;
     firstBaseline = fb;
     secondBaseline = sb;
-    averageFrequency = avg;
 }
 
 QDateTime Session::getDateTime()
@@ -23,11 +22,6 @@ float Session::getFirstBaseline()
 float Session::getSecondBaseline()
 {
     return secondBaseline;
-}
-
-float Session::getAverageFrequency()
-{
-    return averageFrequency;
 }
 
 QString Session::toString() const {

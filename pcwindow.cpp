@@ -20,7 +20,7 @@ PCWindow::~PCWindow()
     delete ui;
 }
 
-void PCWindow::readSessions()
+void PCWindow::parseSessions()
 {
 
 }

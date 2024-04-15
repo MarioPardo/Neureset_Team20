@@ -18,7 +18,7 @@ public:
 private:
     Ui::PCWindow *ui;
 
-    void readSessions();
+    void parseSessions();
 
     void readAllAndPrintJson();
 };
