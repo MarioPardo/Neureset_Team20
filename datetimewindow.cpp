@@ -1,7 +1,6 @@
 #include "datetimewindow.h"
 #include "ui_datetimewindow.h"
 
-
 datetimewindow::datetimewindow(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::datetimewindow)
@@ -18,12 +17,14 @@ datetimewindow::~datetimewindow()
 }
 
 
-QDateTime datetimewindow::getDateTimeValue() const {
+QDateTime datetimewindow::getDateTimeValue() const 
+{
     return dateTimeEdit->dateTime();
 }
 
 
-void datetimewindow::onDateTimeChanged(const QDateTime &dateTime){
+void datetimewindow::onDateTimeChanged(const QDateTime &dateTime)
+{
     emit dateTimeValueChanged(dateTime);
     qDebug() << "Selected Date and Time: " << dateTime.toString("yyyy-MM-dd hh:mm:ss");
 }
