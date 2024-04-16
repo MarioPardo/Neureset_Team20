@@ -2,12 +2,11 @@
 #include <iostream>
 #include <QDateTime>
 
-Session::Session(QDateTime date, float fb, float sb, float avg)
+Session::Session(QDateTime date, float fb, float sb)
 {
     dateTime = date;
     firstBaseline = fb;
     secondBaseline = sb;
-    averageFrequency = avg;
 }
 
 QDateTime Session::getDateTime()
@@ -25,14 +24,19 @@ float Session::getSecondBaseline()
     return secondBaseline;
 }
 
-float Session::getAverageFrequency()
+QString Session::toString() const
 {
-    return averageFrequency;
+    QString dateString = dateTime.toString("ddd MMM d, yyyy h:mm AP");
+    QString firstBaselineString = QString::number(firstBaseline, 'f', 3);
+    QString secondBaselineString = QString::number(secondBaseline, 'f', 3);
+
+    return QString("Session On: %1\n    First Baseline: %2 Hz\n    Second Baseline: %3 Hz")
+        .arg(dateString)
+        .arg(firstBaselineString)
+        .arg(secondBaselineString);
 }
 
-QString Session::toString() const {
-    return dateTime.toString();
-}
+
 
 void Session::updateDateTime(const QDateTime &newDateTime)
 {

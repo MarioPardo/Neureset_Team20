@@ -53,8 +53,8 @@ private:
     vector<Session*> sessions;
     BatteryManager* batteryManager;
     QProgressBar* batteryBar;
-
     QDateTime selectedDateTime;
+
 
 
 };

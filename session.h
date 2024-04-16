@@ -9,13 +9,14 @@ class Session
 {
 
 public:
-    Session(QDateTime date, float fb, float sb, float avg);
+    Session(QDateTime date, float fb, float sb);
 
     QDateTime getDateTime();
     float getFirstBaseline();
     float getSecondBaseline();
-    float getAverageFrequency();
     QString toString() const; // New toString function declaration
+
+
 
 public slots:
     void updateDateTime(const QDateTime &newDateTime);
@@ -24,7 +25,6 @@ private:
     QDateTime dateTime;
     float firstBaseline;
     float secondBaseline;
-    float averageFrequency;
 
 };
 
