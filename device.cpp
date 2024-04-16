@@ -74,7 +74,6 @@ void Device::StartSession()
 
 void Device::run()
 {
-    QFutureWatcher<void> watcher;
     if(state == READY)
         return;
 
@@ -158,38 +157,34 @@ void Device::run()
 
     else if(state == ANALYZING)
     {
-        Display("Analyzing");
-        QElapsedTimer elapsedTimer;
-        elapsedTimer.start();
-        bool analyzing = true;
-
-        // Wait for 5 seconds
-        while (analyzing) {
-            if(elapsedTimer.elapsed() %1000 == 0) {
-                //update the tick every second.
-                secondsRemaining--;
-                activeSessionWindow->updateProgress(secondsRemaining);
-            }
-            if (elapsedTimer.elapsed() >= 5000) {
-                analyzing = false; // Set analyzing to false after 5 seconds
-            }
-        }
-        // Transition back to the APPLYING_TREATMENT state
-        state = APPLYING_TREATMENT;
-    }
-
-    else if(state == SECOND_OVERALL)
-    {
         for(Sensor* s: sensors)
         {
-
-            //because sensors stay within their ranges and store their current target freq, there's no need to pass in a freq type or sample value
             float newTargetFreq = s->generateNewFrequency();
             s->generateFrequenciesAndAmplitudes(newTargetFreq);
             s->generateVoltageGraphData();
             s->CalculateDominantFrequency();
         }
+        Display("Analyzing");
+        QElapsedTimer elapsedTimer;
+        elapsedTimer.start();
 
+        if(state == PAUSED) {
+            elapsedTimer.restart();
+        }
+        if(elapsedTimer.elapsed() % 1000 == 0) {
+            //update the tick every second.
+            secondsRemaining--;
+            activeSessionWindow->updateProgress(secondsRemaining);
+        }
+        if (elapsedTimer.elapsed() >= 5000) {
+            // Transition back to the APPLYING_TREATMENT state
+            state = APPLYING_TREATMENT;
+        }
+
+    }
+
+    else if(state == SECOND_OVERALL)
+    {
         Display("Calculating Second Baseline");
         secondBaseline = CalculateBaseline();
         qDebug () << "New baseline frequency: " << secondBaseline;
