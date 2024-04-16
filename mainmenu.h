@@ -49,6 +49,8 @@ private:
     BatteryManager* batteryManager;
     QProgressBar* batteryBar;
 
+    void readAllAndPrintJson();
+
 
 };
 #endif // MAINMENU_H

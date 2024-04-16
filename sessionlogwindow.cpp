@@ -7,6 +7,10 @@
 #include <QStandardItemModel> // Include the necessary header for QStandardItemModel
 #include <QMessageBox>
 #include <QString>
+#include "pcwindow.h"
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM,MainMenu* m) :
     QMainWindow(parent),
@@ -66,7 +70,7 @@ void SessionLogWindow::PopulateListView(QListView* view, std::vector<Session*> s
 
     // Populate the model with session details
     for (Session* session : sessions) {
-        QString sessionString = session->toString(); // Assuming toString() returns session details
+        QString sessionString = session->getDateTime().toString(); // Assuming toString() returns session details
         QStandardItem *listItem = new QStandardItem(sessionString);
         model->appendRow(listItem);
     }
@@ -82,8 +86,6 @@ void SessionLogWindow::on_pushButton_clicked()
 }
 
 
-
-
 void SessionLogWindow::on_addCart_clicked()
 {
     int row =  ui->listView_2->selectionModel()->selectedIndexes().first().row();
@@ -94,5 +96,79 @@ void SessionLogWindow::on_addCart_clicked()
     sessionsForPC.push_back(sesh);
 
     PopulateListView(ui->listView,sessionsForPC);
+}
+
+
+void SessionLogWindow::saveSession(Session* session)
+{
+    std::cout << "Saving session" << std::endl;
+
+    // Create a JSON object for the session
+    QJsonObject sessionObject;
+
+    // Convert QDateTime to QString
+    QString dateTimeString = session->getDateTime().toString(Qt::ISODate);
+
+    // Assign session data to the JSON object
+    sessionObject["DateTime"] = dateTimeString;
+    sessionObject["firstBaseline"] = session->getFirstBaseline();
+    sessionObject["secondBaseline"] = session->getSecondBaseline();
+
+    // Create a JSON array if it doesn't exist in the file
+    QJsonArray jsonArray;
+
+    // Open the file for reading and writing
+    QString filePath = QCoreApplication::applicationDirPath() + "/session-log.json";
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        std::cout << "Failed opening file: " << file.errorString().toStdString() << std::endl;
+        return;
+    }
+
+    // Read existing data from the file, if any
+    QByteArray fileData = file.readAll();
+    if (!fileData.isEmpty())
+    {
+        // Parse existing JSON array from file data
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(fileData);
+        if (jsonDoc.isArray())
+        {
+            // Append existing sessions to the array
+            jsonArray = jsonDoc.array();
+        }
+        else
+        {
+            std::cout << "File does not contain a valid JSON array. Appending sessions as new array." << std::endl;
+        }
+    }
+
+    // Append the new session object to the array
+    jsonArray.append(sessionObject);
+
+    // Write the updated JSON array to the file
+    file.seek(0); // Move file pointer to beginning
+    file.write(QJsonDocument(jsonArray).toJson());
+    file.resize(file.pos()); // Truncate any remaining data
+
+    // Close the file
+    file.close();
+
+    std::cout << "Session saved successfully." << std::endl;
+}
+
+
+void SessionLogWindow::on_sendAll_clicked()
+{
+    for(Session* sesh : sessionsForPC)
+    {
+        saveSession(sesh);
+    }
+
+    //Open PC
+    PCWindow* pcWindow = new PCWindow(this);
+
+    pcWindow->show();
+
 }
 

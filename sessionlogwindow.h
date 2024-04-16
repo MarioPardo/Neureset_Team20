@@ -35,6 +35,8 @@ private slots:
 
     void on_addCart_clicked();
 
+    void on_sendAll_clicked();
+
 private:
     Ui::SessionLogWindow *ui;
     BatteryManager* batteryManager;
@@ -46,6 +48,7 @@ private:
 
     void PopulateListView(QListView* view, std::vector<Session*> sessions);
 
+    void saveSession(Session* session);
 
 };
 
