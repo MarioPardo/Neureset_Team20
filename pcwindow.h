@@ -18,6 +18,9 @@ public:
     explicit PCWindow(QWidget *parent = nullptr);
     ~PCWindow();
 
+private slots:
+    void on_closeButton_clicked();
+
 private:
     Ui::PCWindow *ui;
 

@@ -95,3 +95,10 @@ void PCWindow::populateSessionsView()
     ui->listView->setModel(model);
 
 }
+
+void PCWindow::on_closeButton_clicked()
+{
+    this->close();
+    std::cout << std::endl << "Close window";
+}
+
