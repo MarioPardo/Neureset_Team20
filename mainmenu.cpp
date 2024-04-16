@@ -76,13 +76,10 @@ void MainMenu::on_datentime_Btn_clicked()
 {
     cout << endl <<"Current Date and time: "  <<  endl;
     datetimewindow* DTW = new datetimewindow();
+    connect(DTW, &datetimewindow::dateTimeValueChanged, this, &MainMenu::handleDateTimeValueChanged);
+
     DTW->show();
-
-    //session = new Session(this);
-   // connect(DTW, &datetimewindow::dateTimeChanged, sessions, &Session::updateDateTime);
-   // cout << "Date and Time: " << sessions.getDateTime().toString().toStdString();
 }
-
 
 
 void MainMenu::on_power_Btn_clicked()
@@ -96,3 +93,18 @@ vector<Session*> MainMenu::getSessions() const {
     return sessions;
 }
 
+
+void MainMenu::handleDateTimeValueChanged(const QDateTime &dateTime) {
+    selectedDateTime = dateTime;
+    cout << "Selected Date and Time MAIN MENU: " << selectedDateTime.toString("yyyy-MM-dd hh:mm:ss").toStdString() << endl;
+}
+
+QDateTime MainMenu::getSelectedDateTime() const {
+    // Returns the selected date and time if the user selects a date and time in the settings
+    // Else, returns current date
+    if (selectedDateTime.isValid()) {
+        return selectedDateTime; 
+    } else {
+        return QDateTime::currentDateTime(); 
+    }
+}

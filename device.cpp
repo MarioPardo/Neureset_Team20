@@ -5,10 +5,12 @@
 #include "batterymanager.h"
 #include <sstream>
 #include "mainmenu.h"
+#include "datetimewindow.h"
 #include "session.h"
 
 
-Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTextEdit* textEdit, ActiveSessionWindow* activesesh) : QObject(parent)
+Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTextEdit* textEdit, ActiveSessionWindow* activesesh, QDateTime selectedDateTime) : QObject(parent)
+
 {
     std::cout << "Device Constructor" << std::endl;
 
@@ -17,7 +19,7 @@ Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTex
     displayArea = textEdit;
     activeSessionWindow = activesesh;
 
-
+    dtw = new datetimewindow;
 
     for(int i= 0; i < 7; i++) {
         Sensor* newSensor = new Sensor(i + 1, DESIRED_FREQUENCY_TYPE);
@@ -47,6 +49,8 @@ void Device::setLEDLights(QFrame* green, QFrame* blue, QFrame* red)
 
 void Device::StartSession()
 {
+    //dtw = new datetimewindow;
+
     if(state == PAUSED)
     {
         pause(); //will handle unpausing
@@ -181,14 +185,13 @@ void Device::EndSession()
     runTimer->stop();
     activeSessionWindow->updateProgress(0);
 
-    QDateTime dateTime = QDateTime::currentDateTime();
-    Session *session = new Session(dateTime,firstBaseline,secondBaseline);
+    QDateTime dateTime = mainMenu->getSelectedDateTime();
+    cout << "Selected Date and Time: " << dateTime.toString("yyyy-MM-dd hh:mm:ss").toStdString() << endl;
 
-    //save session to permanent storoage here
+    Session *session = new Session(dateTime,firstBaseline,secondBaseline);
     mainMenu->addSession(session);
 
     reset();
-
 }
 
 

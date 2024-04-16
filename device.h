@@ -14,6 +14,7 @@
 #include <QPlainTextEdit>
 #include <QProgressBar>
 #include <QLabel>
+#include "datetimewindow.h"
 
 class BatteryManager;
 class MainMenu;
@@ -25,7 +26,7 @@ class Device : public QObject
    Q_OBJECT
 public:
 
-   Device(QObject *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* mainM = nullptr,QPlainTextEdit* textEdit = nullptr,ActiveSessionWindow* activesesh = nullptr);
+   Device(QObject *parent = nullptr, BatteryManager* batM = nullptr, MainMenu* mainM = nullptr,QPlainTextEdit* textEdit = nullptr,ActiveSessionWindow* activesesh = nullptr, QDateTime selectedDateTime = QDateTime());
 
     ~Device();
 
@@ -40,8 +41,11 @@ public:
     void reset();
     Sensor* getSensor(int index);
 
+    QDateTime getSelectedDateTime() const;
+
 public slots:
     void run();
+
 
 private:
 
@@ -82,6 +86,10 @@ private:
 
     //change this to get different frequency bands
     EEGFrequencyType DESIRED_FREQUENCY_TYPE = DELTA;
+
+    datetimewindow* dtw;
+    QDateTime selectedDateTime;
+
 };
 
 #endif // DEVICE_H

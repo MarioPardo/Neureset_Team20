@@ -6,6 +6,7 @@
 #include <QDateTimeEdit>
 #include <QDebug>
 
+
 namespace Ui {
 class datetimewindow;
 }
@@ -16,18 +17,22 @@ class datetimewindow : public QFrame
 
 public:
     explicit datetimewindow(QWidget *parent = nullptr);
-    QDateTimeEdit* dateTimeEdit() const;
     ~datetimewindow();
 
+    QDateTime getDateTimeValue() const;
+
 signals:
-    void dateTimeChanged(const QDateTime &newDateTime);
+    void dateTimeValueChanged(const QDateTime &DateTime);
 
 public slots:
-    void ondateTimeChanged(const QDateTime &newdateTime);
+    void onDateTimeChanged(const QDateTime &dateTime);
 
 private:
     Ui::datetimewindow *ui;
-    QDateTimeEdit *editedDateTime;
+    QDateTimeEdit* dateTimeEdit;
+    QDateTime dateTimeValue;
+
 };
+
 
 #endif // DATETIMEWINDOW_H

@@ -7,6 +7,7 @@
 #include <QObject>
 #include <vector>
 #include "activesessionwindow.h"
+#include "qdatetime.h"
 
 class BatteryManager;
 class Session;
@@ -30,6 +31,8 @@ public:
     void SetBatteryManager(BatteryManager* batM);
     vector<Session*> getSessions() const;
 
+    QDateTime getSelectedDateTime() const;
+
 
 private slots:
     void on_newsession_Btn_clicked();
@@ -42,14 +45,16 @@ private slots:
 
     void updateBatteryBar(int percentage);
 
+    void handleDateTimeValueChanged(const QDateTime &dateTime);
+
 private:
     Ui::MainMenu *ui;
 
     vector<Session*> sessions;
     BatteryManager* batteryManager;
     QProgressBar* batteryBar;
+    QDateTime selectedDateTime;
 
-    void readAllAndPrintJson();
 
 
 };
