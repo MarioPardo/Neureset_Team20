@@ -60,13 +60,13 @@ float Sensor::generateNewFrequency()
 {
     std::vector<double> ranges = this->getFrequencyRange(this->frequencyType);
     double minFreq = ranges[0];
+    double maxFreq = ranges[1];
     //[----I-----]  bottom range, from [ to first harmonic frequency (this actually represents target freq. of wave)
-    std::uniform_real_distribution<double> dis(minFreq, frequency1);
+    std::uniform_real_distribution<double> dis(minFreq, maxFreq);
     double newFreq =dis(*QRandomGenerator::global());
     frequency1 = newFreq;
-    //return random number with frequency lower than the original dominant frequency within its range - since the device helps with focus, it makes sense that it would reduce brain activity
+    //return random number with frequency w would reduce brain activity
     return newFreq;
-
 }
 
 void Sensor::ApplyTreatment(float domFreq, int round)
@@ -81,7 +81,7 @@ void Sensor::ApplyTreatment(float domFreq, int round)
         if(i % 2 == 1)
             tempFreq = domFreq + (5*round);
 
-        std::cout<<"Sensor " << std::to_string(this->id) + " frequency at " << std::to_string(tempFreq) << "hz" <<std::endl;;
+        // std::cout<<"Sensor " << std::to_string(this->id) + " frequency at " << std::to_string(tempFreq) << "hz" <<std::endl;;
         //63 milisecond sleep because 1/16th of a second = 62.5 milliseconds but you can't pass floats or doubles into msleep
         QThread::msleep(63);
     }

@@ -7,7 +7,8 @@
 #include "mainmenu.h"
 #include "datetimewindow.h"
 #include "session.h"
-
+#include <QtConcurrent/QtConcurrent>
+#include <QFuture>
 
 Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTextEdit* textEdit, ActiveSessionWindow* activesesh, QDateTime selectedDateTime) : QObject(parent)
 
@@ -25,7 +26,6 @@ Device::Device(QObject *parent, BatteryManager* batM, MainMenu* mainM, QPlainTex
         Sensor* newSensor = new Sensor(i + 1, DESIRED_FREQUENCY_TYPE);
         sensors.append(newSensor);
     }
-
 }
 
 Device::~Device()
@@ -74,7 +74,7 @@ void Device::StartSession()
 
 void Device::run()
 {
-
+    QFutureWatcher<void> watcher;
     if(state == READY)
         return;
 
@@ -90,8 +90,6 @@ void Device::run()
         return;
     }
 
-    secondsRemaining--;
-    activeSessionWindow->updateProgress(secondsRemaining);
 
     if(state == FIRST_OVERALL)
     {
@@ -111,41 +109,75 @@ void Device::run()
 
         return;
     }
+
     else if(state == APPLYING_TREATMENT)
     {
-        Display("Treatment Round: " + std::to_string(treatmentRound));
+        Display("Treatment Round: " + QString::number(treatmentRound));
 
         if(sensorQueue.isEmpty())
         {
-            Display("Finished round #: " + std::to_string(treatmentRound) + "!" );
-
-            if(treatmentRound  == numRounds) //finished treatment, go to next step
+            if(treatmentRound == numRounds) //finished treatment, go to next step
             {
+                qDebug () << "Reached here";
                 treatmentRound = NULL;
                 sensorQueue.clear();
                 state = SECOND_OVERALL;
+                return;
             }
-
-            //not last round, prep for next round
             sensorQueue.clear();
-            for(Sensor* s : sensors)
+            for(Sensor* s : sensors) {
                 sensorQueue.append(s);
-
+            }
             treatmentRound++;
-
             return;
         }
 
-        Sensor* sensor = sensorQueue.front();
-        sensorQueue.erase(sensorQueue.begin());
+        flashFrame(greenLED, "green");
 
+        //creating a list of future objects because qtconcurrent run returns one of these when finished
+        QList<QFuture<void>> futures;
+        for(Sensor* sensor : sensorQueue) {
+            QFuture<void> future = QtConcurrent::run([=]() {
+                float domFreq = sensor->CalculateDominantFrequency();
+                sensor->ApplyTreatment(domFreq, treatmentRound);
+            });
+            futures.append(future);
+        }
+        //go down one second after treatment duration (1sec)
+        secondsRemaining--;
+        activeSessionWindow->updateProgress(secondsRemaining);
 
-        float domFreq = sensor->CalculateDominantFrequency();
-        flashFrame(greenLED,"green");
-        sensor->ApplyTreatment(domFreq,treatmentRound);
-
-        return;
+        //wait for treatments on each electrode to be finished
+        for(QFuture<void> f: futures) {
+            f.waitForFinished();
+        }
+        Display("Finished round #: " + QString::number(treatmentRound) + "!" );
+        sensorQueue.clear();
+        state = ANALYZING;
     }
+
+    else if(state == ANALYZING)
+    {
+        Display("Analyzing");
+        QElapsedTimer elapsedTimer;
+        elapsedTimer.start();
+        bool analyzing = true;
+
+        // Wait for 5 seconds
+        while (analyzing) {
+            if(elapsedTimer.elapsed() %1000 == 0) {
+                //update the tick every second.
+                secondsRemaining--;
+                activeSessionWindow->updateProgress(secondsRemaining);
+            }
+            if (elapsedTimer.elapsed() >= 5000) {
+                analyzing = false; // Set analyzing to false after 5 seconds
+            }
+        }
+        // Transition back to the APPLYING_TREATMENT state
+        state = APPLYING_TREATMENT;
+    }
+
     else if(state == SECOND_OVERALL)
     {
         for(Sensor* s: sensors)
@@ -165,7 +197,6 @@ void Device::run()
 
         return;
     }
-
 }
 
 
@@ -225,7 +256,7 @@ void Device::SensorDisconnected(int sensor)
 
     }
 
-    std::string toOutput = setToString(disconnectedSensors);
+    QString toOutput = QString::fromStdString(setToString(disconnectedSensors));
     Display("Disconnected Sensors: " + toOutput +  " ");
     flashFrame(redLED, "red");
 }
@@ -258,10 +289,10 @@ void Device::flashFrame(QFrame* frame, std::string color) {
 
 }
 
-void Device::Display(std::string str)
+void Device::Display(QString str)
 {
     displayArea->clear();
-    displayArea->setPlainText(QString::fromStdString(str));
+    displayArea->setPlainText(str);
     displayArea->update();
     QApplication::processEvents();
 }

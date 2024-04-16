@@ -9,6 +9,7 @@ enum DEVICE_STATE {
     FIRST_OVERALL = 4,
     APPLYING_TREATMENT = 5,
     SECOND_OVERALL = 6,
+    ANALYZING = 7
 };
 
 enum EEGFrequencyType {
@@ -23,7 +24,7 @@ enum EEGFrequencyType {
 #define DRAIN_RATE_FAST 2
 #define DRAIN_RATE_SLOW  1
 
-#define SESSION_LENGTH 36
+#define SESSION_LENGTH 29
 
 #define NUM_SENSORS 7
 

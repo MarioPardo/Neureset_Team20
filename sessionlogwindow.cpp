@@ -11,6 +11,8 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QFile>
+
 
 SessionLogWindow::SessionLogWindow(QWidget *parent, BatteryManager* batM,MainMenu* m) :
     QMainWindow(parent),

@@ -10,9 +10,9 @@
 #include <QtMath>
 #include <QObject>
 
-class Sensor
+class Sensor: public QObject
 {
-
+Q_OBJECT
 public:
     Sensor(int id, EEGFrequencyType freqType);
     void ApplyTreatment(float domFreq,int round);
