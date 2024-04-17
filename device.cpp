@@ -121,7 +121,6 @@ void Device::run()
         {
             if(treatmentRound == numRounds) //finished treatment, go to next step
             {
-                qDebug () << "Reached here";
                 treatmentRound = NULL;
                 sensorQueue.clear();
                 state = SECOND_OVERALL;
