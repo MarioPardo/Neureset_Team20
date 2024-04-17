@@ -15,7 +15,7 @@ public:
     float getFirstBaseline();
     float getSecondBaseline();
     QString toString() const; // New toString function declaration
-
+    bool operator==(const Session &other) const;
 
 
 public slots:

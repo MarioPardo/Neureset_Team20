@@ -37,7 +37,7 @@ void PCWindow::parseSessions()
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        std::cout << "Failed to open file for reading: " << file.errorString().toStdString() << std::endl;
+        qDebug() << "Failed to open file for reading: " << file.errorString() << Qt::endl;
         return;
     }
 

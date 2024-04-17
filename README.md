@@ -32,14 +32,15 @@ This is our submission for the COMP3004's final project, Neureset.
 - Implemented session window including the logic required for stating starting, pausing, stopping, and sensor connection/disconenction including logic, and the UI
 - Implemented device battery system including fully drained battery safety scenario
 - Implemented permanent storage for session information and populating the PC UI
-- Helped implement treatment
+- Helped implement treatment, especially concurrency behavior between rounds
 - General project planning and  decision making,  and ensured smooth work coordination
 
 **Jai**:
 - Implemented sensor voltage data generation
 - Spearheaded waveform generation, including data and plotting
 - Wrote dominant frequency and baseline frequency calculation algorithms
-- Implemented treatment from start to finish including initial baseline measurement, oscillation around starting and offset frequencies, and final measurement of baselines and wave regeneration
+- Implemented treatment from start to finish including initial baseline measurement, dominant frequency regeneration during rounds, final measurement of baselines and wave generation/regeneration
+- Added null and duplicate checks to session log window to handle erroneous user input
 - Attended several lectures to ask questions and receive clarification on project direction, specifics, edge cases and disseminated information effectively
 - Created multiple communication channels through social media (Instagram, Discord)
 - Delegated and followed up on various tasks

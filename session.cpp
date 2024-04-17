@@ -44,3 +44,10 @@ void Session::updateDateTime(const QDateTime &newDateTime)
     std::cout << "CURRENT DATETIME: " << dateTime.toString("yyyy-MM-dd hh:mm:ss").toStdString() << std::endl;
     //std::cout << dateTime.toString() << std::endl;
 }
+
+bool Session::operator==(const Session &other) const {
+    if(this->dateTime == other.dateTime) {
+        return true;
+    }
+    return false;
+}

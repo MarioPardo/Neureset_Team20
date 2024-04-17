@@ -3,13 +3,11 @@
 
 #include "defs.h"
 #include <string>
-#include <QVector>
 #include <set>
 #include <QTime>
 #include <QDateTime>
 #include <QTimer>
 #include <QObject>
-#include <sstream>
 #include "sensor.h"
 #include <QPlainTextEdit>
 #include <QProgressBar>
@@ -30,7 +28,7 @@ public:
 
     ~Device();
 
-    void Display(std::string);
+    void Display(QString);
     void SensorDisconnected(int sensor);
 
     void setLEDLights(QFrame* green, QFrame* blue, QFrame* red);
@@ -60,9 +58,11 @@ private:
     DEVICE_STATE state = READY;
     DEVICE_STATE prevState = state;
     QTime pausedTime;
+    QTime analyzedStart;
     int numRounds = 4;
     int pauseTimeout = 7000;
     int secondsRemaining;
+    int analyzeTime = 5000;
 
     QTimer* runTimer;
     QPlainTextEdit* displayArea;
@@ -89,7 +89,6 @@ private:
 
     datetimewindow* dtw;
     QDateTime selectedDateTime;
-
 };
 
 #endif // DEVICE_H
