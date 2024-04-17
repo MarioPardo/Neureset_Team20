@@ -49,7 +49,7 @@ This is our submission for the COMP3004's final project, Neureset.
 
 ## Project organization
 
-/Documentation/ - Folder for UML sequence, class, and state diagrams + traceability matrix
+/Documentation/ - Folder for UML sequence, class, and state diagrams, traceability matrix and use cases
 
 Neureset_Team20.pro - Project build file required by qt
 
