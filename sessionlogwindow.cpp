@@ -90,11 +90,21 @@ void SessionLogWindow::on_pushButton_clicked()
 
 void SessionLogWindow::on_addCart_clicked()
 {
+    if(!ui->listView_2->selectionModel()->hasSelection()) {
+        QMessageBox::critical(this, "NOTHING SELECTED", "Please select a session to add.");
+        return;
+    }
     int row =  ui->listView_2->selectionModel()->selectedIndexes().first().row();
     std::cout<<"Index:" + std::to_string(row) << std::endl;;
     Session* sesh = allSessions.at(row);
 
-    //TODO make sure this session isnt already in the vector
+    //check if session isn't already in vector
+    for(Session* s: sessionsForPC) {
+        if(sesh == s) {
+            QMessageBox::warning(this,"DUPLICATE ADD ATTEMPTED", "Session is already in PC List.");
+            return;
+        }
+    }
     sessionsForPC.push_back(sesh);
 
     PopulateListView(ui->listView,sessionsForPC);
