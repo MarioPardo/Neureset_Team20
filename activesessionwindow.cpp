@@ -67,12 +67,10 @@ void ActiveSessionWindow::updateBatteryBar(int percentage)
 
 void ActiveSessionWindow::updateProgress(int secondsRemaining)
 {
-    int percent;
+    if (secondsRemaining < 0)
+        secondsRemaining = 0;
 
-    if (secondsRemaining <= 0)
-        percent = 100;
-    else
-        percent = ((SESSION_LENGTH - secondsRemaining) * 100 / SESSION_LENGTH);
+    int percent = ((SESSION_LENGTH - secondsRemaining) * 100 / SESSION_LENGTH);
 
     std::string timeString;
     if (secondsRemaining < 10)

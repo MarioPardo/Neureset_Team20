@@ -58,9 +58,11 @@ private:
     DEVICE_STATE state = READY;
     DEVICE_STATE prevState = state;
     QTime pausedTime;
+    QTime analyzedStart;
     int numRounds = 4;
     int pauseTimeout = 7000;
     int secondsRemaining;
+    int analyzeTime = 5000;
 
     QTimer* runTimer;
     QPlainTextEdit* displayArea;

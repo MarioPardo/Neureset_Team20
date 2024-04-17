@@ -49,7 +49,6 @@ void Device::setLEDLights(QFrame* green, QFrame* blue, QFrame* red)
 
 void Device::StartSession()
 {
-    //dtw = new datetimewindow;
 
     if(state == PAUSED)
     {
@@ -90,6 +89,12 @@ void Device::run()
     }
 
 
+    secondsRemaining--;
+    activeSessionWindow->updateProgress(secondsRemaining);
+
+
+
+
     if(state == FIRST_OVERALL)
     {
         Display("Calculating first Baseline");
@@ -111,7 +116,6 @@ void Device::run()
 
     else if(state == APPLYING_TREATMENT)
     {
-        Display("Treatment Round: " + QString::number(treatmentRound));
 
         if(sensorQueue.isEmpty())
         {
@@ -131,6 +135,8 @@ void Device::run()
             return;
         }
 
+         Display("Treatment Round: " + QString::number(treatmentRound));
+
         flashFrame(greenLED, "green");
 
         //creating a list of future objects because qtconcurrent run returns one of these when finished
@@ -142,17 +148,18 @@ void Device::run()
             });
             futures.append(future);
         }
-        //go down one second after treatment duration (1sec)
-        secondsRemaining--;
-        activeSessionWindow->updateProgress(secondsRemaining);
+
 
         //wait for treatments on each electrode to be finished
         for(QFuture<void> f: futures) {
-            f.waitForFinished();
+           f.waitForFinished();
         }
+
         Display("Finished round #: " + QString::number(treatmentRound) + "!" );
         sensorQueue.clear();
         state = ANALYZING;
+        std::cout.flush();
+        analyzedStart = QTime::currentTime();
     }
 
     else if(state == ANALYZING)
@@ -165,21 +172,14 @@ void Device::run()
             s->CalculateDominantFrequency();
         }
         Display("Analyzing");
-        QElapsedTimer elapsedTimer;
-        elapsedTimer.start();
 
-        if(state == PAUSED) {
-            elapsedTimer.restart();
-        }
-        if(elapsedTimer.elapsed() % 1000 == 0) {
-            //update the tick every second.
-            secondsRemaining--;
-            activeSessionWindow->updateProgress(secondsRemaining);
-        }
-        if (elapsedTimer.elapsed() >= 5000) {
-            // Transition back to the APPLYING_TREATMENT state
+        if(analyzedStart.msecsTo(QTime::currentTime()) >= pauseTimeout)
+        {
             state = APPLYING_TREATMENT;
+            pausedTime = QTime();
         }
+
+
 
     }
 
@@ -210,6 +210,7 @@ void Device::EndSession()
     batteryManager->fastDrain(false);
     runTimer->stop();
     activeSessionWindow->updateProgress(0);
+    secondsRemaining = SESSION_LENGTH;
 
     QDateTime dateTime = mainMenu->getSelectedDateTime();
     cout << "Selected Date and Time: " << dateTime.toString("yyyy-MM-dd hh:mm:ss").toStdString() << endl;

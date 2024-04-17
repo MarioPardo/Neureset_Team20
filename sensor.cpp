@@ -71,7 +71,7 @@ float Sensor::generateNewFrequency()
 
 void Sensor::ApplyTreatment(float domFreq, int round)
 {
-    std::cout<<"Applying treatment to Sensor#" << std::to_string(id) << " with dominant frequency:" <<std::to_string(domFreq) <<std::endl;
+    std::cout<<"Applying treatment to Sensor#" << std::to_string(id) << " with dominant frequency:" <<std::to_string(domFreq) << "\n" ;
 
 
     for(int i = 0; i < 16; i++)
