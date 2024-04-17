@@ -41,7 +41,7 @@ This is our submission for the COMP3004's final project, Neureset.
 - Wrote dominant frequency and baseline frequency calculation algorithms
 - Implemented treatment from start to finish including initial baseline measurement, dominant frequency regeneration during rounds, final measurement of baselines and wave generation/regeneration
 - Added null and duplicate checks to session log window to handle erroneous user input
-- Attended several lectures to ask questions and receive clarification on project direction, specifics, edge cases and disseminated information effectively
+- Attended several lectures to ask questions and receive clarification on project direction, specifics, and edge cases. Disseminated information effectively.
 - Created multiple communication channels through social media (Instagram, Discord)
 - Delegated and followed up on various tasks
 
