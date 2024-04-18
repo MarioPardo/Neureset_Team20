@@ -88,12 +88,10 @@ void ActiveSessionWindow::updateProgress(int secondsRemaining)
 void ActiveSessionWindow::on_stop_Btn_clicked()
 {
     device->stop();
-    QTimer::singleShot(2000, [this]() //so that display is shown for a little before closing
-    {
-        m_instance = nullptr;
-        delete device;
-        this->close();
-    });
+    QThread::msleep(2000);
+    m_instance = nullptr;
+    delete device;
+    this->close();
 }
 
 
