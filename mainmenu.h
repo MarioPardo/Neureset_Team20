@@ -55,7 +55,5 @@ private:
     QProgressBar* batteryBar;
     QDateTime selectedDateTime;
 
-
-
 };
 #endif // MAINMENU_H

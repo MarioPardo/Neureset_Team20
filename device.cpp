@@ -211,8 +211,7 @@ void Device::EndSession()
     activeSessionWindow->updateProgress(0);
     secondsRemaining = SESSION_LENGTH;
 
-    QDateTime dateTime = mainMenu->getSelectedDateTime();
-    cout << "Selected Date and Time: " << dateTime.toString("yyyy-MM-dd hh:mm:ss").toStdString() << endl;
+    QDateTime dateTime = mainMenu->getSelectedDateTime(); //gets device's date and time
 
     Session *session = new Session(dateTime,firstBaseline,secondBaseline);
     mainMenu->addSession(session);
