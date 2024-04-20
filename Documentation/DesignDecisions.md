@@ -28,6 +28,6 @@
 - This then emits a signal to the MainMenu class’ handleDateTimeChanged() slot which sets the MainMenu’s internal date and time, which the MainMenu uses when creating session objects.
 - MainMenu is therefore an observer of the date and time window.
 
-## MainMenu:
+### MainMenu:
 - The main menu controls where what windows the user can access, and is a mediator for the entire program.
 - Other components can access important information, like the DateTime, or the sessions performed in this run of the program, through the Main Menu.
