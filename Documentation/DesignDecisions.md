@@ -1,4 +1,4 @@
-## 3004 Team 20 Design Decisions
+## Design Decisions
 
 ### Treatment:
 
