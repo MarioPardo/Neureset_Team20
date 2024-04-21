@@ -9,6 +9,8 @@ This is our submission for the COMP3004's final project, Neureset.
 - Anh-Tu Vothang
 - Dante Farinon-Spezzano
 
+[Video Showcase](https://drive.google.com/file/d/1LxDx1NxzFLJNb3I9p0S4b1e0asWsXC0p/view?usp=sharing)
+
 
 ## Individual Contributions
 
