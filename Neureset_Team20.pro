@@ -54,3 +54,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     README.md
+
+# QMAKE_CXXFLAGS += -Wa,-mbig-obj
+

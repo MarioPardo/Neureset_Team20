@@ -16,13 +16,7 @@ datetimewindow::~datetimewindow()
     delete ui;
 }
 
-
-QDateTime datetimewindow::getDateTimeValue() const 
-{
-    return dateTimeEdit->dateTime();
-}
-
-
+// slot that emits the signal whenever the date and time are changed in the settings
 void datetimewindow::onDateTimeChanged(const QDateTime &dateTime)
 {
     emit dateTimeValueChanged(dateTime);

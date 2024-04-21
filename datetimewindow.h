@@ -19,8 +19,6 @@ public:
     explicit datetimewindow(QWidget *parent = nullptr);
     ~datetimewindow();
 
-    QDateTime getDateTimeValue() const;
-
 signals:
     void dateTimeValueChanged(const QDateTime &DateTime);
 
@@ -30,9 +28,6 @@ public slots:
 private:
     Ui::datetimewindow *ui;
     QDateTimeEdit* dateTimeEdit;
-    QDateTime dateTimeValue;
-
 };
-
 
 #endif // DATETIMEWINDOW_H
