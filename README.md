@@ -11,6 +11,11 @@ This is our submission for the COMP3004's final project, Neureset.
 
 [Video Showcase](https://drive.google.com/file/d/1LxDx1NxzFLJNb3I9p0S4b1e0asWsXC0p/view?usp=drive_link)
 
+## Run Instructions
+
+- Double-click the .pro file to open Qt Creator, which will automatically select a kit for you to run the project with.
+- Press "configure project"
+- Hit ctrl+R (command+R for Mac) or the green triangle in the bottom left corner
 
 ## Individual Contributions
 
